@@ -1,0 +1,19 @@
+{
+  "name": "angular-q4-course",
+  "version": "1.0.0",
+  "description": "Video portal app. For Angular Q4 Course",
+  "main": "index.js",
+  "scripts": {
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alena-khmaruk/angular-q4-course.git"
+  },
+  "author": "alena-khmaruk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alena-khmaruk/angular-q4-course/issues"
+  },
+  "homepage": "https://github.com/alena-khmaruk/angular-q4-course#readme"
+}
