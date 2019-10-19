@@ -1,0 +1,11 @@
+.vc-user {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+
+    &__icon {
+        height: 15px;
+        width: auto;
+        margin-right: 10px;
+    }
+}
