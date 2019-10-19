@@ -1,6 +1,6 @@
-import {CourseInterface} from '../interfaces/course.interface';
+import {ICourse} from '../interfaces/course.interface';
 
-export class Course implements CourseInterface {
+export class Course implements ICourse {
     public id: string;
     public title: string;
     public creationDate: Date;

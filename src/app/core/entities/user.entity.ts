@@ -1,6 +1,6 @@
-import {UserInterface} from '../interfaces/user.interface';
+import {IUser} from '../interfaces/user.interface';
 
-export class User implements UserInterface {
+export class User implements IUser {
     public id: string;
     public firstName: string;
     public lastName: string;
