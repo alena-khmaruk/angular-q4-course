@@ -1,11 +1,13 @@
+@import 'variables';
+
 .vc-footer {
-    background: #1f3346;
+    background: $vc-dark-blue;
     display: flex;
     width: 100%;
     height: 50px;
     align-items: center;
     justify-content: flex-end;
-    color: #ffffff;
+    color: $vc-white;
     position: absolute;
     left: 0;
     bottom: 0;

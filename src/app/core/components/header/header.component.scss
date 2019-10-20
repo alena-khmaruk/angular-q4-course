@@ -1,7 +1,9 @@
+@import 'variables';
+
 .vc-header {
     height: 50px;
-    background: #1f3346;
-    color: #ffffff;
+    background: $vc-dark-blue;
+    color: $vc-white;
     display: flex;
     align-items: center;
     justify-content: space-between;

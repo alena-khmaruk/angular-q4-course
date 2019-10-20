@@ -1,4 +1,9 @@
-import {IUser} from '../interfaces/user.interface';
+export interface IUser {
+    id: string;
+    firstName: string;
+    lastName: string;
+    getFullName(): string;
+}
 
 export class User implements IUser {
     public id: string;

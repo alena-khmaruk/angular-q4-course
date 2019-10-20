@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from '../../entities/course.entity';
+import {Course} from '../course/course.model';
 
 @Component({
     selector: 'vc-courses-list',

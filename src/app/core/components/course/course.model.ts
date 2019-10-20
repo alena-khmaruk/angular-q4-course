@@ -1,4 +1,10 @@
-import {ICourse} from '../interfaces/course.interface';
+export interface ICourse {
+    id: string;
+    title: string;
+    creationDate: Date;
+    duration: number;
+    description: string;
+}
 
 export class Course implements ICourse {
     public id: string;
