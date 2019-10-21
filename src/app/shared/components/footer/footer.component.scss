@@ -1,0 +1,18 @@
+@import 'variables';
+
+.vc-footer {
+    background: $vc-dark-blue;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: flex-end;
+    color: $vc-white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    &__text {
+        margin-right: 20px;
+    }
+}

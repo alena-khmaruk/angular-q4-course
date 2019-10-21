@@ -1,0 +1,27 @@
+@import 'variables';
+
+.vc-header {
+    height: 50px;
+    background: $vc-dark-blue;
+    color: $vc-white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__logo {
+        align-items: center;
+        display: flex;
+    }
+
+    &__img {
+        width: auto;
+        height: 25px;
+        margin-right: 10px;
+        margin-left: 30px;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+}
