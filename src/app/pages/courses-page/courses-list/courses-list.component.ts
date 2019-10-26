@@ -16,4 +16,11 @@ export class CoursesListComponent implements OnInit {
         this.coursesList = COURSES_LIST;
     }
 
+    loadMoreCourses() {
+        console.log('Load More Courses');
+    }
+
+    deleteCourse(id: string) {
+        console.log(`Course ${id} will be deleted`);
+    }
 }

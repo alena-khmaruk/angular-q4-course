@@ -1,0 +1,55 @@
+@import 'variables';
+
+.vc-search {
+    display: flex;
+
+    &__wrapper {
+        position: relative;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    &__icon {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        width: 24px;
+        height: 24px;
+    }
+
+    &__label {
+        color: $vc-silver;
+        line-height: 1.71;
+        font-size: 14px;
+        position: absolute;
+        left: 42px;
+        top: 12px;
+        user-select: none;
+    }
+
+    &__input {
+        height: 48px;
+        width: 360px;
+        border: 1px solid $vc-light-grey;
+        border-radius: 3px;
+        padding: 12px 12px 12px 42px;
+        line-height: 1.71;
+        font-size: 14px;
+        font-family: inherit;
+        color: $vc-dark-silver;
+    }
+
+    &__button {
+        width: 100px;
+        height: 48px;
+        border-radius: 3px;
+        background: $vc-green;
+        color: $vc-white;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 2.56;
+        font-family: inherit;
+        cursor: pointer;
+    }
+}

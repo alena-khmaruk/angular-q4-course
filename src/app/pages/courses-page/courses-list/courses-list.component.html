@@ -1,0 +1,2 @@
+<vc-course (deleteCourse)="deleteCourse(course?.id)" *ngFor="let course of coursesList" [course]="course"></vc-course>
+<button (click)="loadMoreCourses()" class="vc-courses-list__more-button" type="button">Load more</button>

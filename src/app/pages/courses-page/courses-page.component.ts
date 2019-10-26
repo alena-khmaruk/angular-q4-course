@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'vc-courses-page',
-    templateUrl: './coursesPage.component.html',
-    styleUrls: ['./coursesPage.component.scss']
+    templateUrl: './courses-page.component.html',
+    styleUrls: ['./courses-page.component.scss']
 })
 export class CoursesPageComponent implements OnInit {
 
