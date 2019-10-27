@@ -6,9 +6,9 @@ const MINUTES_IN_HOURS = 60;
     name: 'time'
 })
 export class TimePipe implements PipeTransform {
-    transform(minutes: number): any {
-        const hours = Math.floor(minutes / MINUTES_IN_HOURS);
-        const lastMinutes = minutes % MINUTES_IN_HOURS;
+    public transform(minutes: number): string {
+        const hours: number = Math.floor(minutes / MINUTES_IN_HOURS);
+        const lastMinutes: number = minutes % MINUTES_IN_HOURS;
         return `${hours}h ${lastMinutes}m`;
     }
 

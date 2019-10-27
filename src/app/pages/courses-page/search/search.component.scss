@@ -17,16 +17,6 @@
         height: 24px;
     }
 
-    &__label {
-        color: $vc-silver;
-        line-height: 1.71;
-        font-size: 14px;
-        position: absolute;
-        left: 42px;
-        top: 12px;
-        user-select: none;
-    }
-
     &__input {
         height: 48px;
         width: 360px;
@@ -37,6 +27,10 @@
         font-size: 14px;
         font-family: inherit;
         color: $vc-dark-silver;
+
+        &::placeholder {
+            color: $vc-silver;
+        }
     }
 
     &__button {

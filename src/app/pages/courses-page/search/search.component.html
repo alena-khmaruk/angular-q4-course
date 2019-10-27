@@ -1,11 +1,11 @@
 <div class="vc-search">
     <div class="vc-search__wrapper">
         <img class="vc-search__icon" src="assets/images/ic-search.svg" alt="Search Icon">
-        <label class="vc-search__label" for="vc-input" *ngIf="!searchValue">Text to search</label>
         <input
             id="vc-input"
             class="vc-search__input"
             type="text"
+            placeholder="Text to search"
             [(ngModel)]="searchValue">
     </div>
     <button (click)="searchCourse()" class="vc-search__button" type="button">Search</button>

@@ -8,13 +8,13 @@ import {Course} from './course.model';
 })
 
 export class CourseComponent implements OnInit {
-    @Input() course: Course;
-    @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+    @Input() public course: Course;
+    @Output() public deleteCourse: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
     public delete(): void {
