@@ -1,0 +1,20 @@
+@import 'variables';
+
+.vc-courses-list {
+    &__more-button {
+        height: 48px;
+        border-radius: 6px;
+        box-shadow: 0 1px 24px 0 $vc-shadow;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: $vc-soft-blue;
+        font-size: 12px;
+        width: 100%;
+        border: none;
+        background: $vc-white;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

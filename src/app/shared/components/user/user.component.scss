@@ -1,11 +1,38 @@
+@import 'variables';
+
 .vc-user {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 39px;
 
     &__icon {
-        height: 15px;
-        width: auto;
-        margin-right: 10px;
+        margin-right: 9px;
+
+        &--user {
+            width: 10px;
+            height: 12px;
+        }
+
+        &--exit {
+            width: 16px;
+            height: 12px;
+        }
+    }
+
+    &__name {
+        margin-right: 25px;
+    }
+
+    &__exit {
+        background: none;
+        border: none;
+        color: $vc-white;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

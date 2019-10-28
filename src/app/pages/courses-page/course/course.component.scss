@@ -1,0 +1,94 @@
+@import 'variables';
+
+.vc-course {
+    border-radius: 8px;
+    box-shadow: 0 1px 24px 0 $vc-shadow;
+    background-color: $vc-white;
+    margin-bottom: 24px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &__wrapper {
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 225px;
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.25;
+        color: $vc-dark-grey;
+        margin-bottom: 8px;
+    }
+
+    &__description {
+        margin-right: 50px;
+        flex: 1;
+    }
+
+    &__buttons {
+        flex: 0 0 173px
+    }
+
+    &__button {
+        height: 24px;
+        border: none;
+        background: $vc-blue;
+        color: $vc-white;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 12px;
+        border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+
+        &--edit {
+            width: 75px;
+            margin-right: 12px;
+            padding-left: 15px;
+        }
+
+        &--delete {
+            width: 86px;
+            padding-left: 15px;
+        }
+    }
+
+    &__pencil-icon {
+        width: auto;
+        height: 12px;
+        position: absolute;
+        left: 14px;
+        top: 6px;
+    }
+
+    &__delete-icon {
+        width: auto;
+        height: 13px;
+        position: absolute;
+        top: 5px;
+        left: 14px;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        color: $vc-cloudy-blue;
+        font-size: 13px;
+    }
+
+    &__info-text {
+        margin-right: 16px;
+    }
+
+    &__info-icon {
+        height: 16px;
+        width: auto;
+        margin-right: 8px;
+    }
+}

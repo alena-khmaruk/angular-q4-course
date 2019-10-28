@@ -1,0 +1,10 @@
+@import 'variables';
+
+.vc-course {
+    &__not-found {
+        font-size: 24px;
+        color: $vc-red;
+        padding: 24px 85px;
+        font-weight: 700;
+    }
+}
