@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../course/course.model';
-import {COURSES_LIST} from '../../../core/.courses';
+import {CoursesService} from './services/courses.service';
 
 @Component({
     selector: 'vc-courses-list',
@@ -9,11 +9,11 @@ import {COURSES_LIST} from '../../../core/.courses';
 })
 export class CoursesListComponent implements OnInit {
     public coursesList: Course[];
-    constructor() {
-    }
+
+    constructor(private coursesService: CoursesService) {}
 
     public ngOnInit(): void {
-        this.coursesList = COURSES_LIST;
+        this.coursesList = this.coursesService.getCourses();
     }
 
     public deleteCourse(id: string): void {

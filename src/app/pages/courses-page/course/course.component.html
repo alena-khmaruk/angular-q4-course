@@ -10,11 +10,11 @@
     </div>
     <p class="vc-course__description">{{course?.description}}</p>
     <div class="vc-course__buttons">
-        <button class="vc-course__button vc-course__button--edit" type="button" (click)="edit()">
+        <button id="edit-course" class="vc-course__button vc-course__button--edit" type="button" (click)="edit()">
             <img class="vc-course__pencil-icon" src="assets/images/ic-pencil.svg" alt="Pencil icon">
             Edit
         </button>
-        <button class="vc-course__button vc-course__button--delete" type="button" (click)="delete()">
+        <button id="delete-course" class="vc-course__button vc-course__button--delete" type="button" (click)="delete()">
             <img class="vc-course__delete-icon" src="assets/images/ic-trash.svg" alt="Delete icon">
             Delete
         </button>
