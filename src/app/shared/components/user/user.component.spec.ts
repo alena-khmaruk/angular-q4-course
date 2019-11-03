@@ -1,4 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
 
 import {UserComponent} from './user.component';
 
@@ -9,8 +10,7 @@ describe('UserComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [UserComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -21,5 +21,16 @@ describe('UserComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set up user data on component init', () => {
+        expect(component.user.id).toBe('user_1');
+        expect(component.user.firstName).toBe('Alena');
+        expect(component.user.lastName).toBe('Khmaruk');
+    });
+
+    it('should display full user name', () => {
+        const fullNameElement = fixture.debugElement.query(By.css('.vc-user__name')).nativeElement;
+        expect(fullNameElement.textContent).toEqual('Alena Khmaruk');
     });
 });

@@ -9,15 +9,14 @@ import {User} from './user.model';
 export class UserComponent implements OnInit {
     public user: User;
 
-    constructor() {
+    constructor() {}
+
+    public ngOnInit(): void {
         this.user = new User({
             id: 'user_1',
             firstName: 'Alena',
             lastName: 'Khmaruk'
         });
-    }
-
-    ngOnInit() {
     }
 
 }

@@ -100,6 +100,11 @@
             "styles": [
               "src/styles/global.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": []
           }
         },

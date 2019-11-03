@@ -1,25 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
-import { CoursesComponent } from './courses.component';
+import {CoursesPageComponent} from './courses-page.component';
 
-describe('CoursesComponent', () => {
-  let component: CoursesComponent;
-  let fixture: ComponentFixture<CoursesComponent>;
+describe('CoursesPageComponent', () => {
+    let component: CoursesPageComponent;
+    let fixture: ComponentFixture<CoursesPageComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CoursesComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                FormsModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+            declarations: [CoursesPageComponent]
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CoursesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CoursesPageComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
