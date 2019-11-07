@@ -3,12 +3,16 @@
 .vc-course {
     border-radius: 8px;
     box-shadow: 0 1px 24px 0 $vc-shadow;
-    background-color: $vc-white;
+    background: $vc-white;
     margin-bottom: 24px;
     padding: 24px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+
+    &--rated {
+        background: $vc-pink;
+    }
 
     &__wrapper {
         flex: 0 0 100%;
@@ -24,6 +28,19 @@
         line-height: 1.25;
         color: $vc-dark-grey;
         margin-bottom: 8px;
+
+        &--rated {
+            position: relative;
+
+            &:after {
+                content: "\2605";
+                position: absolute;
+                font-size: 20px;
+                top: 2px;
+                right: -25px;
+                color: $vc-red;
+            }
+        }
     }
 
     &__description {

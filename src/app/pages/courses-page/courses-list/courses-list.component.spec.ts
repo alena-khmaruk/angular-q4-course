@@ -2,27 +2,40 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {By} from '@angular/platform-browser';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
 
 import {CoursesListComponent} from './courses-list.component';
 import {CoursesService} from './services/courses.service';
 import {Course} from '../course/course.model';
+import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
 
 const TEST_COURSE: Course = {
     id: 'test_id',
     description: 'Test course description',
     title: 'Test course title',
     creationDate: new Date(2019, 11, 2),
-    duration: 100
+    duration: 100,
+    topRated: false
 };
 
-let coursesServiceStub: Partial<CoursesService>;
-
-coursesServiceStub = {
+const coursesServiceStub: Partial<CoursesService> = {
     getCourses(): Course[] {
         return [TEST_COURSE];
     }
 };
+
+const filterByNamePipeStub: FilterByNamePipe = {
+    transform(coursesList: Course[], filterValue: string): Course[] {
+        return coursesList;
+    }
+};
+
+@Pipe({name: 'orderBy'})
+class MockOrderByPipe implements PipeTransform {
+    transform(courses: Course[]): Course[] {
+        return courses;
+    }
+}
 
 describe('CoursesListComponent', () => {
     let component: CoursesListComponent;
@@ -30,9 +43,12 @@ describe('CoursesListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [CoursesListComponent],
+            declarations: [CoursesListComponent, MockOrderByPipe],
             imports: [FormsModule, CommonModule],
-            providers: [{provide: CoursesService, useValue: coursesServiceStub}],
+            providers: [
+                {provide: CoursesService, useValue: coursesServiceStub},
+                {provide: FilterByNamePipe, useValue: filterByNamePipeStub}
+            ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
     }));
@@ -78,5 +94,12 @@ describe('CoursesListComponent', () => {
         spyOn(console, 'log');
         component.deleteCourse('test_id');
         expect(console.log).toHaveBeenCalled();
+    });
+
+    it('should call transform method of the pipe on filterCourses method call', () => {
+        const filterByName = TestBed.get(FilterByNamePipe);
+        spyOn(filterByName, 'transform');
+        component.filterCourses('search');
+        expect(filterByName.transform).toHaveBeenCalledWith([TEST_COURSE], 'search');
     });
 });
