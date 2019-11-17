@@ -1,6 +1,12 @@
-<div class="vc-course">
+<div
+    class="vc-course"
+    [ngClass]="{'vc-course--rated': course.topRated}"
+    [vcCoursePlateBorder]="course.creationDate">
+
     <div class="vc-course__wrapper">
-        <h4 class="vc-course__title">{{course?.title}}</h4>
+        <h4 class="vc-course__title" [ngClass]="{'vc-course__title--rated': course.topRated}">
+            {{course?.title | uppercase}}
+        </h4>
         <div class="vc-course__info">
             <img class="vc-course__info-icon" src="assets/images/ic-clock.svg" alt="Clock icon">
             <span class="vc-course__info-text">{{course?.duration | time}}</span>

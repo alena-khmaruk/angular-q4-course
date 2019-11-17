@@ -1,2 +1,20 @@
-<vc-course (deleteCourse)="deleteCourse($event)" *ngFor="let course of coursesList" [course]="course"></vc-course>
-<button (click)="loadMoreCourses()" id="load-courses" class="vc-courses-list__more-button" type="button">Load more</button>
+<vc-search (filterCourses)="filterCourses($event)"></vc-search>
+<vc-add-course></vc-add-course>
+<vc-course
+    (deleteCourse)="deleteCourse($event)"
+    *ngFor="let course of coursesList | orderBy"
+    [course]="course">
+</vc-course>
+<button
+    *ngIf="coursesList && coursesList.length > 0"
+    (click)="loadMoreCourses()"
+    id="load-courses"
+    class="vc-courses-list__more-button"
+    type="button">
+    Load more
+</button>
+<p
+    *ngIf="!coursesList || coursesList.length === 0"
+    class="vc-courses-list__message">
+    No data, feel free to add new course
+</p>

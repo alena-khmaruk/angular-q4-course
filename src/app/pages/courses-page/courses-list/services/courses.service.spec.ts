@@ -16,7 +16,7 @@ describe('CoursesService', () => {
             const service: CoursesService = TestBed.get(CoursesService);
             const result: Course[] = service.getCourses();
             expect(result).toBeDefined();
-            expect(result.length).toBe(3);
+            expect(result.length).toBe(4);
         });
     });
 });

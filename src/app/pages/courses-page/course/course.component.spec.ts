@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
-import {Pipe, PipeTransform} from '@angular/core';
+import {Directive, Input, Pipe, PipeTransform} from '@angular/core';
 
 import {CourseComponent} from './course.component';
 import {Course} from './course.model';
@@ -12,12 +12,20 @@ class MockTimePipe implements PipeTransform {
     }
 }
 
+@Directive({
+    selector: '[vcCoursePlateBorder]'
+})
+class MockPlateDirective {
+    @Input() public vcCoursePlateBorder: Date;
+}
+
 const TEST_COURSE: Course = {
     id: 'test_id',
     description: 'Test course description',
     duration: 100,
     creationDate: new Date(2019, 11, 2),
-    title: 'Test course title'
+    title: 'Test course title',
+    topRated: true
 };
 
 describe('CourseComponent', () => {
@@ -28,7 +36,8 @@ describe('CourseComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 CourseComponent,
-                MockTimePipe
+                MockTimePipe,
+                MockPlateDirective
             ]
         }).compileComponents();
     }));
@@ -46,8 +55,8 @@ describe('CourseComponent', () => {
 
     it('should render course title in a h4 tag', () => {
         const titleElement = fixture.debugElement.query(By.css('h4'));
-        expect(titleElement.nativeElement.textContent)
-            .toContain(TEST_COURSE.title);
+        expect(titleElement.nativeElement.textContent.toLowerCase())
+            .toContain(TEST_COURSE.title.toLowerCase());
     });
 
     it('should render course description', () => {

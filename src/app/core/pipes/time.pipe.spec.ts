@@ -7,11 +7,11 @@ describe('TimePipe', () => {
         expect(pipe).toBeTruthy();
     });
 
-    it('should transform 105 minutes to "1h 45m" string', () => {
-        expect(pipe.transform(105)).toBe('1h 45m');
+    it('should transform 105 minutes to "1h 45min" string', () => {
+        expect(pipe.transform(105)).toBe('1h 45min');
     });
 
-    it('should transform 32 minutes to "32m" string', () => {
-        expect(pipe.transform(32)).toBe('32m');
+    it('should transform 32 minutes to "32min" string', () => {
+        expect(pipe.transform(32)).toBe('32min');
     });
 });

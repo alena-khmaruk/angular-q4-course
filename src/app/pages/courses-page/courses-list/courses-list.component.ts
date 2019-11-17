@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../course/course.model';
 import {CoursesService} from './services/courses.service';
+import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
 
 @Component({
     selector: 'vc-courses-list',
@@ -9,15 +10,25 @@ import {CoursesService} from './services/courses.service';
 })
 export class CoursesListComponent implements OnInit {
     public coursesList: Course[];
+    private initialCoursesList: Course[];
 
-    constructor(private coursesService: CoursesService) {}
+    constructor(
+        private coursesService: CoursesService,
+        private filterByName: FilterByNamePipe
+    ) {}
 
     public ngOnInit(): void {
-        this.coursesList = this.coursesService.getCourses();
+        const coursesList: Course[] = this.coursesService.getCourses();
+        this.initialCoursesList = coursesList;
+        this.coursesList = coursesList;
     }
 
     public deleteCourse(id: string): void {
         console.log(`Course ${id} will be deleted`);
+    }
+
+    public filterCourses(searchValue: string): void {
+        this.coursesList = this.filterByName.transform(this.initialCoursesList, searchValue);
     }
 
     public loadMoreCourses(): void {
