@@ -1,0 +1,25 @@
+<div class="vc-login">
+    <div class="vc-login__form">
+        <h4 class="vc-login__form-title">Login</h4>
+        <label class="vc-login__label" for="email">E-mail:</label>
+        <input
+            class="vc-login__input"
+            id="email"
+            type="email"
+            placeholder="Enter e-mail"
+            required
+            [(ngModel)]="email">
+        <label class="vc-login__label" for="password">Password:</label>
+        <input
+            class="vc-login__input"
+            id="password"
+            type="password"
+            placeholder="Enter password"
+            required
+            [(ngModel)]="password">
+        <div class="vc-login__buttons">
+            <button type="button" class="vc-login__forgot">Forgot password?</button>
+            <button type="submit" class="vc-login__submit" (click)="logIn()">Login</button>
+        </div>
+    </div>
+</div>

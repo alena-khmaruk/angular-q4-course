@@ -2,11 +2,17 @@
 
 .vc-header {
     height: 64px;
+    padding: 0 85px;
     background: $vc-dark-blue;
     color: $vc-white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &__block {
+        display: flex;
+        align-items: center;
+    }
 
     &__logo {
         align-items: center;
@@ -17,6 +23,24 @@
         width: auto;
         height: 32px;
         margin-right: 10px;
-        margin-left: 85px;
+    }
+
+    &__button {
+        background: none;
+        border: none;
+        color: $vc-white;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__icon {
+        margin-right: 9px;
+        width: 16px;
+        height: 12px;
     }
 }

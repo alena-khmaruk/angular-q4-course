@@ -24,7 +24,12 @@ export class CoursesListComponent implements OnInit {
     }
 
     public deleteCourse(id: string): void {
-        console.log(`Course ${id} will be deleted`);
+        // TODO: fix deletion for filtered values
+        if (window.confirm('Are you ready to delete this item?')) {
+            this.coursesService.deleteCourse(id);
+            this.initialCoursesList = this.coursesService.getCourses();
+            this.coursesList = this.coursesService.getCourses();
+        }
     }
 
     public filterCourses(searchValue: string): void {
