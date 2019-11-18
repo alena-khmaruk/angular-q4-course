@@ -10,10 +10,10 @@ export class User implements IUser {
     public firstName: string;
     public lastName: string;
 
-    constructor(user) {
-        this.id = user.id;
-        this.lastName = user.lastName;
-        this.firstName = user.firstName;
+    constructor(firstName: string, lastName: string) {
+        this.id = `${firstName}_${lastName}`;
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 
     getFullName() {

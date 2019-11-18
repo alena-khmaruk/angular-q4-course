@@ -3,7 +3,7 @@
 .vc-user {
     display: flex;
     align-items: center;
-    margin-right: 39px;
+    margin-right: 25px;
 
     &__icon {
         margin-right: 9px;
@@ -11,28 +11,6 @@
         &--user {
             width: 10px;
             height: 12px;
-        }
-
-        &--exit {
-            width: 16px;
-            height: 12px;
-        }
-    }
-
-    &__name {
-        margin-right: 25px;
-    }
-
-    &__exit {
-        background: none;
-        border: none;
-        color: $vc-white;
-        font-size: inherit;
-        font-family: inherit;
-        cursor: pointer;
-
-        &:hover {
-            text-decoration: underline;
         }
     }
 }

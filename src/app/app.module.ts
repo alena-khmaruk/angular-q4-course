@@ -8,11 +8,16 @@ import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.compo
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {PagesModule} from './pages/pages.module';
+import {LoginPageComponent} from './pages/login-page/login-page.component';
 
 const appRoutes: Routes = [
     {
         path: 'courses',
         component: CoursesPageComponent
+    },
+    {
+        path: 'login',
+        component: LoginPageComponent
     },
     {
         path: '',

@@ -2,5 +2,13 @@
     <div class="vc-header__logo">
         <img class="vc-header__img" src="assets/images/ic-logo.svg" alt="play logo">
     </div>
-    <vc-user></vc-user>
+    <div *ngIf="user" class="vc-header__block">
+        <vc-user [user]="user"></vc-user>
+        <img class="vc-header__icon" src="assets/images/ic-exit.svg" alt="exit icon">
+        <button type="button" class="vc-header__button" (click)="logOut()">Log off</button>
+    </div>
+    <div *ngIf="!user && !isLoginPage()" >
+        <img class="vc-header__icon" src="assets/images/ic-exit.svg" alt="login icon">
+        <button class="vc-header__button" (click)="openLoginPage()">Log in</button>
+    </div>
 </header>

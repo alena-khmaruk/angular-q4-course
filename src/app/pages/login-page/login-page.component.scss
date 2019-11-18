@@ -1,0 +1,73 @@
+@import 'variables';
+
+.vc-login {
+    &__form {
+        background: $vc-white;
+        width: 368px;
+        border-radius: 6px;
+        box-shadow: 0 1px 24px 0 $vc-shadow;
+        margin: 50px auto;
+        padding: 24px;
+    }
+
+    &__form-title {
+        font-family: $vc-ff-source-sans;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.25;
+        margin-bottom: 24px;
+    }
+
+    &__label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.22px;
+        color: $vc-dark-grey;
+        margin-bottom: 9px;
+    }
+
+    &__input {
+        font-family: $vc-ff-source-sans;
+        font-size: 14px;
+        line-height: 1.71;
+        padding: 6px 12px;
+        border-radius: 3px;
+        border: 1px solid $vc-light-grey;
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
+        color: $vc-dark-grey;
+
+        &::placeholder {
+            color: $vc-silver;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 18px;
+    }
+
+    &__forgot {
+        border: none;
+        background: none;
+        color: $vc-soft-blue;
+        text-decoration: underline;
+        font-size: 12px;
+        line-height: 1.5;
+        letter-spacing: 0.19px;
+        font-family: $vc-ff-source-sans;
+    }
+
+    &__submit {
+        width: 68px;
+        height: 36px;
+        border-radius: 3px;
+        border: none;
+        background: $vc-green;
+        color: $vc-white;
+        font-family: $vc-ff-source-sans;
+    }
+}

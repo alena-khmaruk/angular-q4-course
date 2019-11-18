@@ -21,7 +21,8 @@ const TEST_COURSE: Course = {
 const coursesServiceStub: Partial<CoursesService> = {
     getCourses(): Course[] {
         return [TEST_COURSE];
-    }
+    },
+    deleteCourse(id: string): void {}
 };
 
 const filterByNamePipeStub: FilterByNamePipe = {
@@ -90,10 +91,20 @@ describe('CoursesListComponent', () => {
         expect(console.log).toHaveBeenCalled();
     });
 
-    it('should call console.log method on deleteCourse method call', () => {
-        spyOn(console, 'log');
+    it('should call coursesService.deleteCourse method on deleteCourse method call  when confirmation=true', () => {
+        const coursesService = TestBed.get(CoursesService);
+        spyOn(coursesService, 'deleteCourse');
+        spyOn(window, 'confirm').and.returnValue(true);
         component.deleteCourse('test_id');
-        expect(console.log).toHaveBeenCalled();
+        expect(coursesService.deleteCourse).toHaveBeenCalledWith('test_id');
+    });
+
+    it('should not call coursesService.deleteCourse method on deleteCourse method call when confirmation=false', () => {
+        const coursesService = TestBed.get(CoursesService);
+        spyOn(coursesService, 'deleteCourse');
+        spyOn(window, 'confirm').and.returnValue(false);
+        component.deleteCourse('test_id');
+        expect(coursesService.deleteCourse).not.toHaveBeenCalled();
     });
 
     it('should call transform method of the pipe on filterCourses method call', () => {
