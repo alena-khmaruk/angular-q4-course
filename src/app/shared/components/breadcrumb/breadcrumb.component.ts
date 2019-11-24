@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {NavigationEnd, Router, RouterEvent} from '@angular/router';
+
+import {BREADCRUMBS} from '../../../core/.breadcrumbsConfig';
 
 @Component({
     selector: 'vc-breadcrumb',
@@ -6,11 +9,15 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-    public breadcrumbs: string[];
+    public breadcrumbs: {values: string[], links: string[]};
 
-    constructor() {}
+    constructor(private router: Router) {}
 
     public ngOnInit(): void {
-        this.breadcrumbs = ['Courses'];
+        this.router.events.subscribe((event: RouterEvent) => {
+            if (event instanceof NavigationEnd) {
+                this.breadcrumbs = BREADCRUMBS[event.url] || BREADCRUMBS.default;
+            }
+        });
     }
 }

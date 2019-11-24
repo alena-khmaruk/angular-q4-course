@@ -1,7 +1,17 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import {RouterTestingModule} from '@angular/router/testing';
+import {NavigationEnd, NavigationStart, Router, RouterEvent} from '@angular/router';
+import {ReplaySubject} from 'rxjs';
 
 import {BreadcrumbComponent} from './breadcrumb.component';
+
+const eventSubject = new ReplaySubject<RouterEvent>(1);
+
+const routerMock = {
+    navigate: jasmine.createSpy('navigate'),
+    events: eventSubject.asObservable(),
+    url: '/new'
+};
 
 describe('BreadcrumbComponent', () => {
     let component: BreadcrumbComponent;
@@ -9,13 +19,21 @@ describe('BreadcrumbComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BreadcrumbComponent]
+            declarations: [BreadcrumbComponent],
+            imports: [RouterTestingModule],
+            providers: [{provide: Router, useValue: routerMock}]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
+        component.breadcrumbs = {values: [], links: []};
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        component.breadcrumbs = {values: [], links: []};
         fixture.detectChanges();
     });
 
@@ -23,14 +41,15 @@ describe('BreadcrumbComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should set up breadcrumbs array on component init', () => {
-        expect(component.breadcrumbs).toEqual(['Courses']);
+    it('should set new breadcrumbs after NavigationEnd event', () => {
+        eventSubject.next(new NavigationEnd(1, '/courses', '/new'));
+        fixture.detectChanges();
+        expect(component.breadcrumbs).toEqual({values: ['Courses'], links: []});
     });
 
-    it('should display each breadcrumb in span tag', () => {
-        const spanElements = fixture.debugElement.queryAll(By.css('span'));
-        expect(spanElements.length).toBe(1);
-        const firstSpanContent = spanElements[0].nativeElement.textContent;
-        expect(firstSpanContent).toContain('Courses');
+    it('should set empty breadcrumbs after navigate to unknown url', () => {
+        eventSubject.next(new NavigationEnd(2, '/fff', '/courses'));
+        fixture.detectChanges();
+        expect(component.breadcrumbs).toEqual({values: [], links: []});
     });
 });

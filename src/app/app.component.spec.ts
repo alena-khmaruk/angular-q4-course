@@ -1,4 +1,5 @@
 import {TestBed, async} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserModule} from '@angular/platform-browser';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
@@ -8,7 +9,8 @@ describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                BrowserModule
+                BrowserModule,
+                RouterTestingModule
             ],
             declarations: [
                 AppComponent

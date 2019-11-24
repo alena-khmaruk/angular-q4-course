@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Course} from '../course/course.model';
 import {CoursesService} from './services/courses.service';
 import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
@@ -6,7 +6,8 @@ import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
 @Component({
     selector: 'vc-courses-list',
     templateUrl: './courses-list.component.html',
-    styleUrls: ['./courses-list.component.scss']
+    styleUrls: ['./courses-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
     public coursesList: Course[];

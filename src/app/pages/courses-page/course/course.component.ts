@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Course} from './course.model';
 
 @Component({
     selector: 'vc-course',
     templateUrl: './course.component.html',
-    styleUrls: ['./course.component.scss']
+    styleUrls: ['./course.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CourseComponent implements OnInit {

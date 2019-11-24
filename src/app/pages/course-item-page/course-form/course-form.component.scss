@@ -1,0 +1,69 @@
+@import 'variables';
+
+.vc-form {
+    width: 730px;
+    max-width: 95%;
+    border-radius: 8px;
+    box-shadow: 0 1px 24px 0 $vc-shadow;
+    background: $vc-white;
+    margin: 10px auto;
+    padding: 24px;
+    color: $vc-dark-grey;
+
+    &__block {
+        display: block;
+    }
+
+    &__name {
+        margin-bottom: 22px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    &__textarea {
+        resize: none;
+        width: 100%;
+        height: 108px;
+        border-radius: 3px;
+        border: 1px solid $vc-light-grey;
+        font-family: $vc-ff-source-sans;
+        font-size: 14px;
+        line-height: 1.71;
+        color: $vc-stale-grey;
+        padding: 6px 12px;
+        margin-bottom: 12px;
+    }
+
+    &__buttons {
+        margin-top: 24px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__button {
+        height: 36px;
+        border-radius: 3px;
+        font-family: $vc-ff-source-sans;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 0;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__cancel {
+        width: 76px;
+        color: $vc-stale-grey;
+        background: $vc-light-grey;
+        margin-right: 12px;
+    }
+
+    &__save {
+        width: 64px;
+        color: $vc-white;
+        background: $vc-green;
+    }
+}

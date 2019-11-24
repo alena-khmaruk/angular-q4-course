@@ -19,3 +19,25 @@ html,
 body {
     height: 100%;
 }
+
+.vc-input {
+    display: block;
+    height: 36px;
+    border-radius: 3px;
+    border: 1px solid $vc-light-grey;
+    font-family: $vc-ff-source-sans;
+    font-size: 14px;
+    line-height: 1.71;
+    color: $vc-stale-grey;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+}
+
+.vc-label {
+    display: inline-block;
+    line-height: normal;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $vc-stale-grey;
+}

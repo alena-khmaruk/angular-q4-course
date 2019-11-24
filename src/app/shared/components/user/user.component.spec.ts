@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 
 import {UserComponent} from './user.component';
-import {User} from "./user.model";
+import {User} from './user.model';
 
 describe('UserComponent', () => {
     let component: UserComponent;

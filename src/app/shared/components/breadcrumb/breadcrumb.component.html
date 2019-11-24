@@ -1,7 +1,9 @@
-<div class="vc-breadcrumbs">
+<div class="vc-breadcrumbs" *ngIf="breadcrumbs && breadcrumbs.values.length">
     <span
         class="vc-breadcrumbs__item"
-        *ngFor="let breadcrumb of breadcrumbs">
-        {{breadcrumb}}
+        *ngFor="let breadcrumb of breadcrumbs.values; let isLast = last; let i = index;">
+        <a class="vc-breadcrumbs__link" *ngIf="!isLast" [routerLink]="breadcrumbs.links[i]">{{breadcrumb}}</a>
+        <span class="vc-breadcrumbs__text" *ngIf="isLast">{{breadcrumb}}</span>
+        <span class="vc-breadcrumbs__separator" *ngIf="!isLast">/</span>
     </span>
 </div>
