@@ -1,9 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'vc-search',
     templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss']
+    styleUrls: ['./search.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent implements OnInit {
     public searchValue: string;

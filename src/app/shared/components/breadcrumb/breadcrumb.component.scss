@@ -5,5 +5,28 @@
     height: 64px;
     padding: 20px 85px;
     color: $vc-dark-grey;
-    font-weight: 600;
+
+    &__link{
+        display: inline-block;
+        margin-right: 5px;
+        text-decoration: none;
+        color: $vc-stale-grey;
+
+        &:hover {
+            color: $vc-blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    &__text {
+        display: inline-block;
+        font-weight: 600;
+    }
+
+    &__separator {
+        margin-right: 5px;
+        color: $vc-blue;
+        font-weight: 700;
+    }
 }

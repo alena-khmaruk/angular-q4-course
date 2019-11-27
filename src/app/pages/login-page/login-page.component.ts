@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+
 import {AuthenticationService} from '../../shared/components/header/services/authentication.service';
 
 @Component({
     selector: 'vc-login-page',
     templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss']
+    styleUrls: ['./login-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent implements OnInit {
     public email: string;

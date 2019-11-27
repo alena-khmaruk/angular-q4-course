@@ -11,7 +11,7 @@ const authServiceStub: Partial<AuthenticationService> = {
 };
 
 @Component({
-    selector: 'blank',
+    selector: 'vc-blank',
     template: '<div></div>'
 })
 export class BlankComponent {}

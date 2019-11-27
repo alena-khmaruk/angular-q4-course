@@ -1,0 +1,16 @@
+<div class="vc-duration">
+    <label
+        for="courseDuration"
+        class="vc-label">Duration:</label>
+    <div>
+        <input
+            id="courseDuration"
+            [(ngModel)]="duration"
+            class="vc-input vc-duration__input"
+            type="number"
+            placeholder="minutes">
+        <span
+            *ngIf="duration"
+            class="vc-duration__text">{{duration | time}}</span>
+    </div>
+</div>

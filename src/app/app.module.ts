@@ -9,15 +9,29 @@ import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {PagesModule} from './pages/pages.module';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
+import {CourseItemPageComponent} from './pages/course-item-page/course-item-page.component';
 
 const appRoutes: Routes = [
     {
         path: 'courses',
-        component: CoursesPageComponent
+        component: CoursesPageComponent,
+        data: {
+            breadcrumbs: ['Courses']
+        }
     },
     {
         path: 'login',
-        component: LoginPageComponent
+        component: LoginPageComponent,
+        data: {
+            breadcrumbs: []
+        }
+    },
+    {
+        path: 'new',
+        component: CourseItemPageComponent,
+        data: {
+            breadcrumbs: ['Courses', 'New']
+        }
     },
     {
         path: '',
@@ -26,7 +40,11 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        component: NotFoundPageComponent
+        component: NotFoundPageComponent,
+        data: {
+            breadcrumbs: []
+        }
+
     }
 ];
 

@@ -6,11 +6,12 @@
     padding: 24px 0 12px;
 
     &__button {
+        display: inline-block;
         position: relative;
         width: 140px;
         height: 36px;
         border-radius: 3px;
-        padding: 0 24px 0 48px;
+        padding: 5px 24px 5px 48px;
         border: none;
         background: $vc-blue;
         color: $vc-white;
