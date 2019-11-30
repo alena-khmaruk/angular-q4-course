@@ -1,9 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {NavigationEnd, NavigationStart, Router, RouterEvent} from '@angular/router';
+import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 import {ReplaySubject} from 'rxjs';
 
 import {BreadcrumbComponent} from './breadcrumb.component';
+import {CoursesService} from '../../../pages/courses-page/courses-list/services/courses.service';
+import {Course} from '../../../pages/courses-page/course/course.model';
 
 const eventSubject = new ReplaySubject<RouterEvent>(1);
 
@@ -11,6 +13,20 @@ const routerMock = {
     navigate: jasmine.createSpy('navigate'),
     events: eventSubject.asObservable(),
     url: '/new'
+};
+
+const coursesServiceStub: Partial<CoursesService> = {
+    getCourseById(id: string): Course {
+        return {
+            title: 'Title',
+            description: '',
+            duration: 12,
+            creationDate: new Date(),
+            topRated: false,
+            id
+        };
+    },
+    deleteCourse(id: string): void {}
 };
 
 describe('BreadcrumbComponent', () => {
@@ -21,7 +37,10 @@ describe('BreadcrumbComponent', () => {
         TestBed.configureTestingModule({
             declarations: [BreadcrumbComponent],
             imports: [RouterTestingModule],
-            providers: [{provide: Router, useValue: routerMock}]
+            providers: [
+                {provide: Router, useValue: routerMock},
+                {provide: CoursesService, useValue: coursesServiceStub}
+            ]
         }).compileComponents();
     }));
 
@@ -51,5 +70,11 @@ describe('BreadcrumbComponent', () => {
         eventSubject.next(new NavigationEnd(2, '/fff', '/courses'));
         fixture.detectChanges();
         expect(component.breadcrumbs).toEqual({values: [], links: []});
+    });
+
+    it('should set empty breadcrumbs after navigate to unknown url', () => {
+        eventSubject.next(new NavigationEnd(3, '/courses/id_1', '/courses'));
+        fixture.detectChanges();
+        expect(component.breadcrumbs).toEqual({values: ['Courses', 'Title'], links: ['/courses']});
     });
 });

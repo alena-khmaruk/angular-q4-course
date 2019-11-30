@@ -1,18 +1,26 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../../user/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private _user: ReplaySubject<User> = new ReplaySubject<User>();
+    private _user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
+    constructor() {
+        const token: string = localStorage.getItem('token');
+        if (token) {
+            this._user.next(new User('Alena', 'Khmaruk'));
+        }
+    }
+
     get user() {
         return this._user.asObservable();
     }
 
     get isAuthenticated(): boolean {
-        return Boolean(this._user._getNow());
+        return Boolean(this._user.getValue());
     }
 
     public logIn(email: string, password: string): void {

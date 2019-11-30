@@ -31,4 +31,12 @@ describe('DurationInputComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should emit update duration event on blur event', () => {
+        let testData: number;
+        component.duration = 100;
+        component.updateDuration.subscribe((value) => testData = value);
+        component.onBlur();
+        expect(testData).toEqual(100);
+    });
 });
