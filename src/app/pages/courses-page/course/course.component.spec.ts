@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {Directive, Input, Pipe, PipeTransform} from '@angular/core';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Router} from '@angular/router';
 
 import {CourseComponent} from './course.component';
 import {Course} from './course.model';
@@ -34,6 +36,7 @@ describe('CourseComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [RouterTestingModule],
             declarations: [
                 CourseComponent,
                 MockTimePipe,
@@ -93,8 +96,9 @@ describe('CourseComponent', () => {
     });
 
     it('should call console.log method on edit method call', () => {
-        spyOn(console, 'log');
+        const router: Router = TestBed.get(Router);
+        spyOn(router, 'navigate');
         component.edit();
-        expect(console.log).toHaveBeenCalled();
+        expect(router.navigate).toHaveBeenCalledWith(['courses', 'test_id']);
     });
 });

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'vc-duration-input',
@@ -7,10 +7,14 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DurationInputComponent implements OnInit {
-    public duration: number;
+    @Input() public duration: number;
+    @Output() public updateDuration: EventEmitter<number> = new EventEmitter<number>();
 
     constructor() {}
 
     public ngOnInit(): void {}
 
+    public onBlur(): void {
+        this.updateDuration.emit(this.duration);
+    }
 }

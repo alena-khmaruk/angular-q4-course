@@ -1,12 +1,27 @@
 <div class="vc-form">
-    <h3 class="vc-form__name">New Course</h3>
-    <form id="course" class="vc-form__block" name="course">
+    <h3 class="vc-form__name">{{headline}}</h3>
+    <form id="course" class="vc-form__block" name="courseForm">
         <label for="courseTitle" class="vc-label">Title:</label>
-        <input id="courseTitle" class="vc-input" type="text" placeholder="Text input" required>
+        <input
+            id="courseTitle"
+            class="vc-input"
+            type="text"
+            placeholder="Text input"
+            required
+            [(ngModel)]="newCourse.title"
+            name="courseTitle">
+
         <label for="courseDescription" class="vc-label">Description:</label>
-        <textarea class="vc-form__textarea" id="courseDescription" placeholder="Add description"></textarea>
-        <vc-duration-input></vc-duration-input>
-        <vc-date-input></vc-date-input>
+        <textarea
+            class="vc-form__textarea"
+            id="courseDescription"
+            placeholder="Add description"
+            name="courseDescription"
+            [(ngModel)]="newCourse.description"></textarea>
+
+        <vc-duration-input (updateDuration)="updateDuration($event)" [duration]="newCourse.duration"></vc-duration-input>
+
+        <vc-date-input (updateDate)="updateDate($event)" [dateCreation]="newCourse.creationDate"></vc-date-input>
 
         <div class="vc-form__buttons">
             <button [routerLink]="['/courses']" class="vc-form__button vc-form__cancel">Cancel</button>

@@ -8,7 +8,8 @@
             [(ngModel)]="duration"
             class="vc-input vc-duration__input"
             type="number"
-            placeholder="minutes">
+            placeholder="minutes"
+            (blur)="onBlur()">
         <span
             *ngIf="duration"
             class="vc-duration__text">{{duration | time}}</span>

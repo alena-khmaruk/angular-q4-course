@@ -10,41 +10,36 @@ import {SharedModule} from './shared/shared.module';
 import {PagesModule} from './pages/pages.module';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
 import {CourseItemPageComponent} from './pages/course-item-page/course-item-page.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const appRoutes: Routes = [
-    {
-        path: 'courses',
-        component: CoursesPageComponent,
-        data: {
-            breadcrumbs: ['Courses']
-        }
-    },
-    {
-        path: 'login',
-        component: LoginPageComponent,
-        data: {
-            breadcrumbs: []
-        }
-    },
-    {
-        path: 'new',
-        component: CourseItemPageComponent,
-        data: {
-            breadcrumbs: ['Courses', 'New']
-        }
-    },
     {
         path: '',
         redirectTo: '/courses',
         pathMatch: 'full'
     },
     {
+        path: 'courses',
+        component: CoursesPageComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'login',
+        component: LoginPageComponent
+    },
+    {
+        path: 'courses/new',
+        component: CourseItemPageComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'courses/:id',
+        component: CourseItemPageComponent,
+        canActivate: [AuthGuard]
+    },
+    {
         path: '**',
-        component: NotFoundPageComponent,
-        data: {
-            breadcrumbs: []
-        }
-
+        component: NotFoundPageComponent
     }
 ];
 
@@ -55,7 +50,7 @@ const appRoutes: Routes = [
     imports: [
         RouterModule.forRoot(
             appRoutes,
-            { enableTracing: true }
+            { enableTracing: false }
         ),
         BrowserModule,
         CoreModule,

@@ -25,7 +25,6 @@ export class CoursesListComponent implements OnInit {
     }
 
     public deleteCourse(id: string): void {
-        // TODO: fix deletion for filtered values
         if (window.confirm('Are you ready to delete this item?')) {
             this.coursesService.deleteCourse(id);
             this.initialCoursesList = this.coursesService.getCourses();

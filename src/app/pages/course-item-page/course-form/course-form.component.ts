@@ -1,4 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+
+import {Course} from '../../courses-page/course/course.model';
+import {CoursesService} from '../../courses-page/courses-list/services/courses.service';
 
 @Component({
     selector: 'vc-course-form',
@@ -6,11 +10,39 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-    constructor() {}
+    @Input() public course: Course;
 
-    public ngOnInit(): void {}
+    public isEditPage: boolean;
+    public newCourse: Course;
+    public headline: string;
+
+    constructor(
+        private courses: CoursesService,
+        private router: Router
+    ) {}
+
+    public ngOnInit(): void {
+        this.isEditPage = Boolean(this.course);
+        this.course = this.course || new Course();
+        this.newCourse = Object.assign({}, this.course);
+        this.headline = this.isEditPage ? `Edit ${this.course.title} Course` : 'New course';
+    }
 
     public saveCourse() {
-        console.log('Save course');
+        if (this.isEditPage) {
+            this.courses.updateCourse(this.course.id, this.newCourse);
+        } else {
+            this.newCourse.id = `id_${Math.floor(Math.random() * 100)}`;
+            this.courses.createCourse(this.newCourse);
+        }
+        this.router.navigate(['courses']);
+    }
+
+    public updateDate(creationDate: Date): void {
+        this.newCourse.creationDate = creationDate;
+    }
+
+    public updateDuration(duration: number): void {
+        this.newCourse.duration = duration;
     }
 }

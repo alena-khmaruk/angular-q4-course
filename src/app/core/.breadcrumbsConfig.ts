@@ -9,7 +9,7 @@ export const BREADCRUMBS = {
         values: ['Courses'],
         links: []
     },
-    '/new': {
+    '/courses/new': {
         values: ['Courses', 'New'],
         links: ['/courses']
     },

@@ -16,6 +16,11 @@ export class Course implements ICourse {
     public topRated: boolean;
 
     constructor() {
-
+        this.id = '';
+        this.title = '';
+        this.creationDate = new Date();
+        this.duration = 0;
+        this.description = '';
+        this.topRated = false;
     }
 }

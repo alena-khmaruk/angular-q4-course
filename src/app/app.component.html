@@ -2,7 +2,7 @@
     <vc-header></vc-header>
     <vc-breadcrumb></vc-breadcrumb>
     <main class="vc-main">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onActivate()"></router-outlet>
     </main>
     <vc-footer></vc-footer>
 </div>

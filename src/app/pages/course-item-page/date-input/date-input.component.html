@@ -1,4 +1,11 @@
 <div class="vc-date">
     <label for="courseDate" class="vc-label">Date:</label>
-    <input id="courseDate" class="vc-input vc-date__input" type="date" placeholder="date">
+    <input
+        id="courseDate"
+        class="vc-input vc-date__input"
+        type="date"
+        placeholder="date"
+        [ngModel]="dateCreation | date:'yyyy-MM-dd'"
+        (ngModelChange)="dateCreation = $event"
+        (blur)="onBlur()">
 </div>
