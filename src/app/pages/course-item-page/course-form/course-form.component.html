@@ -1,6 +1,5 @@
 <div class="vc-form">
-    <h3 class="vc-form__name" *ngIf="!isEditPage">New Course</h3>
-    <h3 class="vc-form__name" *ngIf="isEditPage">Edit {{course.title}} Course</h3>
+    <h3 class="vc-form__name">{{headline}}</h3>
     <form id="course" class="vc-form__block" name="courseForm">
         <label for="courseTitle" class="vc-label">Title:</label>
         <input

@@ -14,6 +14,7 @@ export class CourseFormComponent implements OnInit {
 
     public isEditPage: boolean;
     public newCourse: Course;
+    public headline: string;
 
     constructor(
         private courses: CoursesService,
@@ -24,6 +25,7 @@ export class CourseFormComponent implements OnInit {
         this.isEditPage = Boolean(this.course);
         this.course = this.course || new Course();
         this.newCourse = Object.assign({}, this.course);
+        this.headline = this.isEditPage ? `Edit ${this.course.title} Course` : 'New course';
     }
 
     public saveCourse() {

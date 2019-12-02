@@ -7,10 +7,11 @@ import {User} from '../../user/user.model';
 })
 export class AuthenticationService {
     private _user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+    private _token: string;
 
     constructor() {
-        const token: string = localStorage.getItem('token');
-        if (token) {
+        this._token = localStorage.getItem('token');
+        if (this._token) {
             this._user.next(new User('Alena', 'Khmaruk'));
         }
     }
@@ -26,7 +27,8 @@ export class AuthenticationService {
     public logIn(email: string, password: string): void {
         console.log(`User successfully logged in via email: ${email} and password: ${password}`);
         this._user.next(new User('Alena', 'Khmaruk'));
-        localStorage.setItem('token', new Date().toString());
+        this._token = new Date().toString();
+        localStorage.setItem('token', this._token);
     }
 
     public logOut(): void {
