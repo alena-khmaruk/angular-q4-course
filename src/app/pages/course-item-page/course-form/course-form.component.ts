@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
 import {Course} from '../../courses-page/course/course.model';
 import {CoursesService} from '../../courses-page/courses-list/services/courses.service';
@@ -8,8 +9,9 @@ import {CoursesService} from '../../courses-page/courses-list/services/courses.s
     selector: 'vc-course-form',
     templateUrl: './course-form.component.html',
     styleUrls: ['./course-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseFormComponent implements OnInit {
+export class CourseFormComponent implements OnInit, OnChanges {
     @Input() public course: Course;
 
     public isEditPage: boolean;
@@ -24,25 +26,37 @@ export class CourseFormComponent implements OnInit {
     public ngOnInit(): void {
         this.isEditPage = Boolean(this.course);
         this.course = this.course || new Course();
-        this.newCourse = Object.assign({}, this.course);
-        this.headline = this.isEditPage ? `Edit ${this.course.title} Course` : 'New course';
+        this._updateHeadline(this.isEditPage);
+    }
+
+    public ngOnChanges(changes): void {
+        this.isEditPage = Boolean(this.course);
+        this._updateHeadline(this.isEditPage);
     }
 
     public saveCourse() {
-        if (this.isEditPage) {
-            this.courses.updateCourse(this.course.id, this.newCourse);
-        } else {
-            this.newCourse.id = `id_${Math.floor(Math.random() * 100)}`;
-            this.courses.createCourse(this.newCourse);
-        }
-        this.router.navigate(['courses']);
+        this._submitForm().subscribe(() => {
+            this.router.navigate(['courses']);
+        });
     }
 
     public updateDate(creationDate: Date): void {
-        this.newCourse.creationDate = creationDate;
+        this.course.date = creationDate;
     }
 
     public updateDuration(duration: number): void {
-        this.newCourse.duration = duration;
+        this.course.length = duration;
+    }
+
+    private _submitForm(): Observable<Course> {
+        if (this.isEditPage) {
+            return this.courses.updateCourse(this.course);
+        } else {
+            return this.courses.createCourse(this.course);
+        }
+    }
+
+    private _updateHeadline(isEditPage: boolean) {
+        this.headline = isEditPage ? `Edit ${this.course.name} Course` : 'New course';
     }
 }

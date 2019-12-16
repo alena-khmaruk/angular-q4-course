@@ -2,19 +2,15 @@
 <vc-add-course></vc-add-course>
 <vc-course
     (deleteCourse)="deleteCourse($event)"
-    *ngFor="let course of coursesList | orderBy"
+    *ngFor="let course of coursesList | async"
     [course]="course">
 </vc-course>
-<button
-    *ngIf="coursesList && coursesList.length > 0"
-    (click)="loadMoreCourses()"
-    id="load-courses"
-    class="vc-courses-list__more-button"
-    type="button">
-    Load more
-</button>
 <p
-    *ngIf="!coursesList || coursesList.length === 0"
+    *ngIf="!(coursesList | async)?.length"
     class="vc-courses-list__message">
-    No data, feel free to add new course
+    It was the last page. You can create a new course or go to the previous page
 </p>
+<div class="vc-courses-list__wrapper">
+    <button class="vc-courses-list__button" (click)="prev()" [disabled]="!_start">Previous</button>
+    <button class="vc-courses-list__button" (click)="next()" [disabled]="!(coursesList | async)?.length">Next</button>
+</div>

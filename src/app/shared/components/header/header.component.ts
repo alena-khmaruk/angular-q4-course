@@ -19,6 +19,9 @@ export class HeaderComponent implements OnInit {
     public ngOnInit(): void {
         this.authService.getUserInfo().subscribe((user: User) => {
             this.user = user;
+            if (user) {
+                this.router.navigateByUrl('/courses');
+            }
         });
     }
 

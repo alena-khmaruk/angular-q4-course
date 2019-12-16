@@ -11,7 +11,7 @@ export class FilterByNamePipe implements PipeTransform {
 
     public transform(coursesList: Course[], filterValue: string): Course[] {
         return coursesList.filter((course: Course) => {
-            return course.title.toLowerCase().includes(filterValue.toLowerCase());
+            return course.name.toLowerCase().includes(filterValue.toLowerCase());
         });
     }
 

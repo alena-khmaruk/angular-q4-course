@@ -1,20 +1,33 @@
 @import 'variables';
 
 .vc-courses-list {
-    &__more-button {
-        height: 48px;
-        border-radius: 6px;
-        box-shadow: 0 1px 24px 0 $vc-shadow;
-        text-transform: uppercase;
+    &__wrapper {
+        text-align: center;
+    }
+
+    &__button {
+        height: 44px;
+        border-radius: 50px;
         cursor: pointer;
         color: $vc-soft-blue;
         font-size: 12px;
-        width: 100%;
-        border: none;
+        width: 100px;
+        border: 2px solid $vc-soft-blue;
         background: $vc-white;
 
-        &:hover {
-            text-decoration: underline;
+        &[disabled] {
+            border-color: $vc-stale-grey;
+            color: $vc-stale-grey;
+            cursor: default;
+        }
+
+        &:first-child {
+            margin-right: 50px;
+        }
+
+        &:hover:not([disabled]) {
+            border-color: $vc-blue;
+            color: $vc-blue;
         }
     }
 
@@ -28,5 +41,6 @@
         width: 100%;
         text-align: center;
         padding: 5px;
+        margin-bottom: 15px;
     }
 }

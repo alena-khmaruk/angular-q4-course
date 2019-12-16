@@ -12,7 +12,7 @@ import {Course} from './course.model';
 
 export class CourseComponent implements OnInit {
     @Input() public course: Course;
-    @Output() public deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+    @Output() public deleteCourse: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(private router: Router) {}
 

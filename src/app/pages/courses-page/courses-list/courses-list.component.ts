@@ -1,7 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+
 import {Course} from '../course/course.model';
-import {CoursesService} from './services/courses.service';
-import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
+import {CoursesService, IFilterParams} from './services/courses.service';
+
+const ITEMS_SET_COUNT = 10;
 
 @Component({
     selector: 'vc-courses-list',
@@ -10,33 +13,46 @@ import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-    public coursesList: Course[];
-    private initialCoursesList: Course[];
+    public coursesList: Observable<Course[]>;
+    private _count = ITEMS_SET_COUNT;
+    private _start = 0;
 
     constructor(
-        private coursesService: CoursesService,
-        private filterByName: FilterByNamePipe
+        private coursesService: CoursesService
     ) {}
 
     public ngOnInit(): void {
-        const coursesList: Course[] = this.coursesService.getCourses();
-        this.initialCoursesList = coursesList;
-        this.coursesList = coursesList;
+        this.coursesList = this.coursesService.getCourses(this._generateParams());
     }
 
-    public deleteCourse(id: string): void {
+    public deleteCourse(id: number): void {
         if (window.confirm('Are you ready to delete this item?')) {
             this.coursesService.deleteCourse(id);
-            this.initialCoursesList = this.coursesService.getCourses();
-            this.coursesList = this.coursesService.getCourses();
+            this._start = 0;
+            this.coursesList = this.coursesService.getCourses(this._generateParams());
         }
     }
 
     public filterCourses(searchValue: string): void {
-        this.coursesList = this.filterByName.transform(this.initialCoursesList, searchValue);
+        const requestParams: Partial<IFilterParams> = this._generateParams();
+        requestParams.textFragment = searchValue;
+        this.coursesList = this.coursesService.getCourses(requestParams);
     }
 
-    public loadMoreCourses(): void {
-        console.log('Load More Courses');
+    public prev(): void {
+        this._start -= ITEMS_SET_COUNT;
+        this.coursesList = this.coursesService.getCourses(this._generateParams());
+    }
+
+    public next(): void {
+        this._start += ITEMS_SET_COUNT;
+        this.coursesList = this.coursesService.getCourses(this._generateParams());
+    }
+
+    private _generateParams(): Partial<IFilterParams> {
+        return {
+            start: this._start.toString(),
+            count: this._count.toString()
+        };
     }
 }

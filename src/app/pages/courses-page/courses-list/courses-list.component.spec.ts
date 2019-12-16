@@ -10,19 +10,19 @@ import {Course} from '../course/course.model';
 import {FilterByNamePipe} from '../../../core/pipes/filter-by-name.pipe';
 
 const TEST_COURSE: Course = {
-    id: 'test_id',
+    id: 1,
     description: 'Test course description',
-    title: 'Test course title',
-    creationDate: new Date(2019, 11, 2),
-    duration: 100,
-    topRated: false
+    name: 'Test course title',
+    date: new Date(2019, 11, 2),
+    length: 100,
+    isTopRated: false
 };
 
 const coursesServiceStub: Partial<CoursesService> = {
     getCourses(): Course[] {
         return [TEST_COURSE];
     },
-    deleteCourse(id: string): void {}
+    deleteCourse(id: number): void {}
 };
 
 const filterByNamePipeStub: FilterByNamePipe = {
@@ -95,7 +95,7 @@ describe('CoursesListComponent', () => {
         const coursesService = TestBed.get(CoursesService);
         spyOn(coursesService, 'deleteCourse');
         spyOn(window, 'confirm').and.returnValue(true);
-        component.deleteCourse('test_id');
+        component.deleteCourse(1);
         expect(coursesService.deleteCourse).toHaveBeenCalledWith('test_id');
     });
 
@@ -103,7 +103,7 @@ describe('CoursesListComponent', () => {
         const coursesService = TestBed.get(CoursesService);
         spyOn(coursesService, 'deleteCourse');
         spyOn(window, 'confirm').and.returnValue(false);
-        component.deleteCourse('test_id');
+        component.deleteCourse(1);
         expect(coursesService.deleteCourse).not.toHaveBeenCalled();
     });
 

@@ -18,8 +18,12 @@ export class CourseItemPageComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.router.params.subscribe((params: {id: string}) => {
-            this.currentCourse = this.courses.getCourseById(params.id);
+        this.router.params.subscribe((params: {id: number}) => {
+            if (params.id) {
+                this.courses.getCourseById(params.id).subscribe((course: Course) => {
+                    this.currentCourse = course;
+                });
+            }
         });
     }
 
