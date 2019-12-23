@@ -1,13 +1,46 @@
 import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import {CoursesService} from './courses.service';
 import {Course} from '../../course/course.model';
 
+const MOCK_COURSES_LIST: Course[] = [
+    {
+        date: new Date('2011-11-11'),
+        name: 'course title test1',
+        length: 83,
+        description: 'test',
+        isTopRated: false,
+        id: 1
+    },
+    {
+        date: new Date('2009-11-11'),
+        name: 'course title test2',
+        length: 83,
+        description: 'test',
+        isTopRated: false,
+        id: 2
+    },
+    {
+        date: new Date('2019-11-11'),
+        name: 'course title test3',
+        length: 83,
+        description: 'test',
+        isTopRated: false,
+        id: 3
+    },
+];
+
 describe('CoursesService', () => {
     let service: CoursesService;
+    let httpMock: HttpTestingController;
+
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule]
+        });
         service = TestBed.get(CoursesService);
+        httpMock = TestBed.get(HttpTestingController);
     });
 
     it('should be created', () => {
@@ -15,60 +48,84 @@ describe('CoursesService', () => {
     });
 
     describe('method: getCourses', () => {
-        it('should return list of courses', () => {
-            const result: Course[] = service.getCourses();
-            expect(result).toBeDefined();
-            expect(result.length).toBe(4);
+        it('should call http.get method with /courses url with parameters', (done) => {
+            service.getCourses({start: '0', count: '10'})
+                .subscribe(res => {
+                    expect(res).toEqual(
+                        MOCK_COURSES_LIST
+                    );
+                    done();
+                });
+
+            const getCoursesReq = httpMock.expectOne('/courses?start=0&count=10');
+            getCoursesReq.flush(MOCK_COURSES_LIST);
+
+            httpMock.verify();
         });
     });
 
     describe('method: createCourse', () => {
-        it('should add new course to the courses list', () => {
-            const course: Course = {
-                id: 'id',
-                title: 'title',
-                duration: 100,
-                creationDate: new Date(),
-                description: 'description',
-                topRated: true
-            };
-            service.createCourse(course);
-            expect(service.getCourses().length).toBe(5);
+        it('should call http.post method with /courses url and course in the body', (done) => {
+            service.createCourse(MOCK_COURSES_LIST[0]).subscribe(res => {
+                expect(res).toEqual(
+                    MOCK_COURSES_LIST[0]
+                );
+                done();
+            });
+
+            const createCourseReq = httpMock.expectOne('/courses');
+            expect(createCourseReq.request.method).toBe('POST');
+            expect(createCourseReq.request.body).toEqual(MOCK_COURSES_LIST[0]);
+            createCourseReq.flush(MOCK_COURSES_LIST[0]);
+
+            httpMock.verify();
         });
     });
 
     describe('method: getCourseById', () => {
-        it('should not return the course if course with such id does not exist', () => {
-            const course: Course = service.getCourseById('not_exist');
-            expect(course).toBeUndefined();
-        });
+        it('should call http.get method with /courses/{id} url', (done) => {
+            service.getCourseById(1).subscribe(res => {
+                expect(res).toEqual(
+                    MOCK_COURSES_LIST[0]
+                );
+                done();
+            });
 
-        it('should return the course if course with such id exists', () => {
-            const course: Course = service.getCourseById('id_1');
-            expect(course).toBeDefined();
+            const getCourseReq = httpMock.expectOne('/courses/1');
+            expect(getCourseReq.request.method).toBe('GET');
+            getCourseReq.flush(MOCK_COURSES_LIST[0]);
+
+            httpMock.verify();
         });
     });
 
     describe('method: updateCourse', () => {
-        it('should update the course data', () => {
-            const courseToUpdate: Partial<Course> = {description: 'description'};
-            service.updateCourse('id_1', courseToUpdate);
-            expect(service.getCourseById('id_1').description).toBe('description');
-        });
+        it('should call http.path method with /courses/{id} url and course', (done) => {
+            service.updateCourse(MOCK_COURSES_LIST[0]).subscribe(res => {
+                expect(res).toEqual(
+                    MOCK_COURSES_LIST[0]
+                );
+                done();
+            });
 
-        it('should not update the course data if course does not exist', () => {
-            const courseToUpdate: Partial<Course> = {description: 'description'};
-            const prevCoursesList = service.getCourses();
-            service.updateCourse('not exist', courseToUpdate);
-            const newCoursesList = service.getCourses();
-            expect(prevCoursesList).toEqual(newCoursesList);
+            const updateCourseReq = httpMock.expectOne('/courses/1');
+            expect(updateCourseReq.request.method).toBe('PATCH');
+            expect(updateCourseReq.request.body).toBe(MOCK_COURSES_LIST[0]);
+            updateCourseReq.flush(MOCK_COURSES_LIST[0]);
+
+            httpMock.verify();
         });
     });
 
     describe('method: deleteCourse', () => {
-        it('should delete the course', () => {
-            service.deleteCourse('id_1');
-            expect(service.getCourses().length).toBe(3);
+        it('should call http.delete method with /courses/{id} url', () => {
+            service.deleteCourse(1);
+
+            const deleteCourseReq = httpMock.expectOne('/courses/1');
+            expect(deleteCourseReq.request.method).toBe('DELETE');
+            deleteCourseReq.flush(MOCK_COURSES_LIST[0]);
+
+            httpMock.verify();
         });
     });
 });

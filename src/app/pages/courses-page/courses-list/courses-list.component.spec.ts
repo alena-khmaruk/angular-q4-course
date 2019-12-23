@@ -1,8 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {By} from '@angular/platform-browser';
 import {NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 import {CoursesListComponent} from './courses-list.component';
 import {CoursesService} from './services/courses.service';
@@ -19,10 +19,8 @@ const TEST_COURSE: Course = {
 };
 
 const coursesServiceStub: Partial<CoursesService> = {
-    getCourses(): Course[] {
-        return [TEST_COURSE];
-    },
-    deleteCourse(id: number): void {}
+    getCourses: jasmine.createSpy().and.returnValue(new BehaviorSubject([TEST_COURSE])),
+    deleteCourse: jasmine.createSpy()
 };
 
 const filterByNamePipeStub: FilterByNamePipe = {
@@ -66,7 +64,6 @@ describe('CoursesListComponent', () => {
 
     it('should call getCourses method on component init', () => {
         const coursesService = TestBed.get(CoursesService);
-        spyOn(coursesService, 'getCourses');
         component.ngOnInit();
         fixture.detectChanges();
         expect(coursesService.getCourses).toHaveBeenCalled();
@@ -77,40 +74,44 @@ describe('CoursesListComponent', () => {
         expect(component.coursesList).toEqual([TEST_COURSE]);
     });
 
-
-    it('should call loadMoreCourses method on button click', () => {
-        spyOn(component, 'loadMoreCourses');
-        const loadButton = fixture.debugElement.query(By.css('#load-courses'));
-        loadButton.nativeElement.click();
-        expect(component.loadMoreCourses).toHaveBeenCalled();
-    });
-
-    it('should call console.log method on loadMoreCourses method call', () => {
-        spyOn(console, 'log');
-        component.loadMoreCourses();
-        expect(console.log).toHaveBeenCalled();
-    });
-
     it('should call coursesService.deleteCourse method on deleteCourse method call  when confirmation=true', () => {
         const coursesService = TestBed.get(CoursesService);
-        spyOn(coursesService, 'deleteCourse');
         spyOn(window, 'confirm').and.returnValue(true);
         component.deleteCourse(1);
-        expect(coursesService.deleteCourse).toHaveBeenCalledWith('test_id');
+        expect(coursesService.deleteCourse).toHaveBeenCalledWith(1);
     });
 
     it('should not call coursesService.deleteCourse method on deleteCourse method call when confirmation=false', () => {
         const coursesService = TestBed.get(CoursesService);
-        spyOn(coursesService, 'deleteCourse');
         spyOn(window, 'confirm').and.returnValue(false);
         component.deleteCourse(1);
         expect(coursesService.deleteCourse).not.toHaveBeenCalled();
     });
 
-    it('should call transform method of the pipe on filterCourses method call', () => {
-        const filterByName = TestBed.get(FilterByNamePipe);
-        spyOn(filterByName, 'transform');
+    it('should call getCourses method with text fragment on filterCourses method call', () => {
+        const coursesService = TestBed.get(CoursesService);
         component.filterCourses('search');
-        expect(filterByName.transform).toHaveBeenCalledWith([TEST_COURSE], 'search');
+        expect(coursesService.getCourses).toHaveBeenCalledWith(
+            {start: '0', count: '10', textFragment: 'search'}
+        );
+    });
+
+    it('should call getCourses method with start = 10 on next button click', () => {
+        const coursesService = TestBed.get(CoursesService);
+        component.next();
+        expect(coursesService.getCourses).toHaveBeenCalledWith(
+            {start: '10', count: '10'}
+        );
+    });
+
+    it('should call getCourses method with start = 10 on prev button click', () => {
+        const coursesService = TestBed.get(CoursesService);
+        component.next();
+        component.next();
+        coursesService.getCourses.calls.reset();
+        component.prev();
+        expect(coursesService.getCourses).toHaveBeenCalledWith(
+            {start: '10', count: '10'}
+        );
     });
 });

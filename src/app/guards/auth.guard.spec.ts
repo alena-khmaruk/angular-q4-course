@@ -10,7 +10,7 @@ const authServiceMock = {
 };
 
 const routerMock = {
-    navigate: jasmine.createSpy('navigate'),
+    navigate: jasmine.createSpy('navigate').and.returnValue(true),
     parseUrl: jasmine.createSpy('parseUrl').and.returnValue('parsed_url')
 };
 

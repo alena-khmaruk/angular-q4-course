@@ -1,10 +1,20 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
+import {switchMap, tap} from 'rxjs/operators';
+
 import {User} from '../../user/user.model';
 
 interface IToken {
     token: string;
+}
+
+interface IUser {
+    id: string;
+    name: {
+        first: string,
+        last: string
+    };
 }
 
 @Injectable({
@@ -16,8 +26,9 @@ export class AuthenticationService {
 
     constructor(private http: HttpClient) {
         this._token = localStorage.getItem('token');
+        this._saveUser = this._saveUser.bind(this);
         if (this._token) {
-            setTimeout(() => this.updateUser(this._token));
+            setTimeout(() => this.requestUserInfo(this._token).subscribe(this._saveUser));
         }
     }
 
@@ -33,14 +44,16 @@ export class AuthenticationService {
         return Boolean(this._token);
     }
 
-    public logIn(email: string, password: string): void {
-        this.http.post<IToken>('/auth/login', {login: email, password}).subscribe(
-            (res: IToken) => {
-                this._token = res.token;
-                localStorage.setItem('token', this._token);
-                this.updateUser(this._token);
-            }
-        );
+    public logIn(login: string, password: string): void {
+        this.http.post<IToken>('/auth/login', {login, password})
+            .pipe(
+                tap((res: IToken) => {
+                    this._token = res.token;
+                    localStorage.setItem('token', res.token);
+                }),
+                switchMap((res: IToken) => this.requestUserInfo(res.token))
+            )
+            .subscribe(this._saveUser);
 
     }
 
@@ -49,14 +62,16 @@ export class AuthenticationService {
         localStorage.removeItem('token');
     }
 
-    getUserInfo(): Observable<User> {
+    public getUser(): Observable<User> {
         return this.user;
     }
 
-    updateUser(token: string) {
-        this.http.post<User>('/auth/userinfo', {token}).subscribe((user: any) => {
-            const userInstance: User = new User(user.name.first, user.name.last);
-            this._user.next(userInstance);
-        });
+    public requestUserInfo(token: string) {
+        return this.http.post<IUser>('/auth/userinfo', {token});
+    }
+
+    private _saveUser(user: IUser) {
+        const userInstance: User = new User(user.name.first, user.name.last);
+        this._user.next(userInstance);
     }
 }

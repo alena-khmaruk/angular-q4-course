@@ -22,17 +22,18 @@ class MockPlateDirective {
 }
 
 const TEST_COURSE: Course = {
-    id: 'test_id',
+    id: 1,
     description: 'Test course description',
-    duration: 100,
-    creationDate: new Date(2019, 11, 2),
-    title: 'Test course title',
-    topRated: true
+    length: 100,
+    date: new Date(2019, 11, 2),
+    name: 'Test course title',
+    isTopRated: true
 };
 
 describe('CourseComponent', () => {
     let component: CourseComponent;
     let fixture: ComponentFixture<CourseComponent>;
+    let router;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -50,6 +51,8 @@ describe('CourseComponent', () => {
         component = fixture.componentInstance;
         component.course = TEST_COURSE;
         fixture.detectChanges();
+        router = TestBed.get(Router);
+        spyOn(router, 'navigate').and.returnValue(true);
     });
 
     it('should create', () => {
@@ -59,7 +62,7 @@ describe('CourseComponent', () => {
     it('should render course title in a h4 tag', () => {
         const titleElement = fixture.debugElement.query(By.css('h4'));
         expect(titleElement.nativeElement.textContent.toLowerCase())
-            .toContain(TEST_COURSE.title.toLowerCase());
+            .toContain(TEST_COURSE.name.toLowerCase());
     });
 
     it('should render course description', () => {
@@ -82,7 +85,7 @@ describe('CourseComponent', () => {
     });
 
     it('should emit deleteCourse event on delete method call', () => {
-        let testId = '';
+        let testId: number;
         component.deleteCourse.subscribe((value) => testId = value);
         component.delete();
         expect(testId).toBe(TEST_COURSE.id);
@@ -96,9 +99,7 @@ describe('CourseComponent', () => {
     });
 
     it('should call console.log method on edit method call', () => {
-        const router: Router = TestBed.get(Router);
-        spyOn(router, 'navigate');
         component.edit();
-        expect(router.navigate).toHaveBeenCalledWith(['courses', 'test_id']);
+        expect(router.navigate).toHaveBeenCalledWith(['courses', 1]);
     });
 });
