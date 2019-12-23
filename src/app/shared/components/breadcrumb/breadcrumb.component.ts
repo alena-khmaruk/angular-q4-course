@@ -4,6 +4,7 @@ import {filter} from 'rxjs/operators';
 
 import {BREADCRUMBS} from '../../../core/.breadcrumbsConfig';
 import {CoursesService} from '../../../pages/courses-page/courses-list/services/courses.service';
+import {Course} from '../../../pages/courses-page/course/course.model';
 
 @Component({
     selector: 'vc-breadcrumb',
@@ -23,11 +24,13 @@ export class BreadcrumbComponent implements OnInit {
 
     public updateBreadcrumbs(url: string): void {
         this.breadcrumbs = BREADCRUMBS[url] || BREADCRUMBS.default;
-        if (url.includes('/courses/id')) {
-            const id = url.replace('/courses/', '');
-            const courseTitle = this.courses.getCourseById(id).title;
-            this.breadcrumbs.values = ['Courses', courseTitle];
-            this.breadcrumbs.links = ['/courses'];
+        if (url.includes('/courses/') && !url.includes('/new')) {
+            const id = parseInt(url.replace('/courses/', ''), 10);
+            this.courses.getCourseById(id).subscribe((course: Course) => {
+                const courseTitle = course.name;
+                this.breadcrumbs.values = ['Courses', courseTitle];
+                this.breadcrumbs.links = ['/courses'];
+            });
         }
     }
 }

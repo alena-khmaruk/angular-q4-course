@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 
 import {AuthenticationService} from '../../shared/components/header/services/authentication.service';
 
@@ -15,13 +14,11 @@ export class LoginPageComponent implements OnInit {
 
     constructor(
         private authService: AuthenticationService,
-        public router: Router
     ) {}
 
     public ngOnInit(): void {}
 
     public logIn(): void {
         this.authService.logIn(this.email, this.password);
-        this.router.navigateByUrl('/courses');
     }
 }

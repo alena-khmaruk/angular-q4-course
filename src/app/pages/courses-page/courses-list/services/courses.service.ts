@@ -1,39 +1,44 @@
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
 import {Course} from '../../course/course.model';
-import {COURSES_LIST} from '../../../../core/.courses';
+
+export interface IFilterParams {
+    start: string;
+    count: string;
+    sort: string;
+    filter: string;
+    textFragment: string;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoursesService {
-    private _coursesList: Set<Course> = new Set(COURSES_LIST);
 
-    public getCourses(): Course[] {
-        return [...this._coursesList];
+    constructor(
+        private http: HttpClient
+    ) {}
+
+    public getCourses(params?: Partial<IFilterParams>): Observable<Course[]> {
+        return this.http.get<Course[]>('/courses', {params});
     }
 
-    public createCourse(item: Course): void {
-        this._coursesList.add(item);
+    public createCourse(item: Course): Observable<Course> {
+        return this.http.post<Course>('/courses', item);
     }
 
-    public getCourseById(id: string): Course {
-        return this.getCourses().find((item: Course) => {
-            return item.id === id;
-        });
+    public getCourseById(id: number): Observable<Course> {
+        return this.http.get<Course>(`/courses/${id}`);
     }
 
-    public updateCourse(id: string, item: Partial<Course>): void {
-        const course: Course = this.getCourseById(id);
-        if (course) {
-            this._coursesList.delete(course);
-            Object.assign(course, item);
-            this._coursesList.add(course);
-        }
+    public updateCourse(item: Course): Observable<Course> {
+        return this.http.patch<Course>(`/courses/${item.id}`, item);
     }
 
-    public deleteCourse(id: string): void {
-        const course: Course = this.getCourseById(id);
-        this._coursesList.delete(course);
+    public deleteCourse(id: number): void {
+        this.http.delete(`/courses/${id}`).subscribe(() => {});
     }
 }
 

@@ -6,6 +6,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {UserComponent} from './components/user/user.component';
+
 @NgModule({
     declarations: [
         HeaderComponent,
@@ -21,7 +22,7 @@ import {UserComponent} from './components/user/user.component';
     imports: [
         CommonModule,
         RouterModule
-    ]
+    ],
 })
 export class SharedModule {
 }

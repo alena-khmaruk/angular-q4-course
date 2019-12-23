@@ -1,17 +1,17 @@
 <div
     class="vc-course"
-    [ngClass]="{'vc-course--rated': course.topRated}"
-    [vcCoursePlateBorder]="course.creationDate">
+    [ngClass]="{'vc-course--rated': course.isTopRated}"
+    [vcCoursePlateBorder]="course.date">
 
     <div class="vc-course__wrapper">
-        <h4 class="vc-course__title" [ngClass]="{'vc-course__title--rated': course.topRated}">
-            {{course?.title | uppercase}}
+        <h4 class="vc-course__title" [ngClass]="{'vc-course__title--rated': course.isTopRated}">
+            {{course?.name | uppercase}}
         </h4>
         <div class="vc-course__info">
             <img class="vc-course__info-icon" src="assets/images/ic-clock.svg" alt="Clock icon">
-            <span class="vc-course__info-text">{{course?.duration | time}}</span>
+            <span class="vc-course__info-text">{{course?.length | time}}</span>
             <img class="vc-course__info-icon" src="assets/images/ic-calendar.svg" alt="Calendar icon">
-            <span>{{course?.creationDate | date}}</span>
+            <span>{{course?.date | date}}</span>
         </div>
     </div>
     <p class="vc-course__description">{{course?.description}}</p>

@@ -8,7 +8,7 @@
             type="text"
             placeholder="Text input"
             required
-            [(ngModel)]="newCourse.title"
+            [(ngModel)]="course.name"
             name="courseTitle">
 
         <label for="courseDescription" class="vc-label">Description:</label>
@@ -17,11 +17,11 @@
             id="courseDescription"
             placeholder="Add description"
             name="courseDescription"
-            [(ngModel)]="newCourse.description"></textarea>
+            [(ngModel)]="course.description"></textarea>
 
-        <vc-duration-input (updateDuration)="updateDuration($event)" [duration]="newCourse.duration"></vc-duration-input>
+        <vc-duration-input (updateDuration)="updateDuration($event)" [duration]="course.length"></vc-duration-input>
 
-        <vc-date-input (updateDate)="updateDate($event)" [dateCreation]="newCourse.creationDate"></vc-date-input>
+        <vc-date-input (updateDate)="updateDate($event)" [dateCreation]="course.date"></vc-date-input>
 
         <div class="vc-form__buttons">
             <button [routerLink]="['/courses']" class="vc-form__button vc-form__cancel">Cancel</button>
