@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
 
 import {CoursesService} from '../courses-page/courses-list/services/courses.service';
 import {Course} from '../courses-page/course/course.model';
@@ -18,13 +19,13 @@ export class CourseItemPageComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.router.params.subscribe((params: {id: number}) => {
-            if (params.id) {
-                this.courses.getCourseById(params.id).subscribe((course: Course) => {
-                    this.currentCourse = course;
-                });
-            }
-        });
+        this.router.params
+            .pipe(
+                switchMap((params: {id: number}) => params.id && this.courses.getCourseById(params.id))
+            )
+            .subscribe((course: Course) => {
+                this.currentCourse = course;
+            });
     }
 
 }
