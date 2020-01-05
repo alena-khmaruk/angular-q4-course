@@ -3,28 +3,28 @@ import {Course} from '../../pages/courses-page/course/course.model';
 
 const MOCK_COURSES_LIST: Course[] = [
     {
-        creationDate: new Date('2011-11-11'),
-        title: 'course title test1',
-        duration: 83,
+        date: new Date('2011-11-11'),
+        name: 'course title test1',
+        length: 83,
         description: 'test',
-        topRated: false,
-        id: 'test'
+        isTopRated: false,
+        id: 1
     },
     {
-        creationDate: new Date('2009-11-11'),
-        title: 'course title test2',
-        duration: 83,
+        date: new Date('2009-11-11'),
+        name: 'course title test2',
+        length: 83,
         description: 'test',
-        topRated: false,
-        id: 'test'
+        isTopRated: false,
+        id: 2
     },
     {
-        creationDate: new Date('2019-11-11'),
-        title: 'course title test3',
-        duration: 83,
+        date: new Date('2019-11-11'),
+        name: 'course title test3',
+        length: 83,
         description: 'test',
-        topRated: false,
-        id: 'test'
+        isTopRated: false,
+        id: 3
     },
 ];
 

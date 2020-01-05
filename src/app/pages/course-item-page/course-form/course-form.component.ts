@@ -15,7 +15,6 @@ export class CourseFormComponent implements OnInit, OnChanges {
     @Input() public course: Course;
 
     public isEditPage: boolean;
-    public newCourse: Course;
     public headline: string;
 
     constructor(
@@ -29,7 +28,7 @@ export class CourseFormComponent implements OnInit, OnChanges {
         this._updateHeadline(this.isEditPage);
     }
 
-    public ngOnChanges(changes): void {
+    public ngOnChanges(): void {
         this.isEditPage = Boolean(this.course);
         this._updateHeadline(this.isEditPage);
     }
@@ -57,6 +56,6 @@ export class CourseFormComponent implements OnInit, OnChanges {
     }
 
     private _updateHeadline(isEditPage: boolean) {
-        this.headline = isEditPage ? `Edit ${this.course.name} Course` : 'New course';
+        this.headline = isEditPage ? `Edit ${this.course.name} course` : 'New course';
     }
 }

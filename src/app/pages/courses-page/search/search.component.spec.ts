@@ -1,8 +1,7 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 
 import {SearchComponent} from './search.component';
-import {By} from '@angular/platform-browser';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
@@ -25,18 +24,13 @@ describe('SearchComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call searchCourse method on button click', () => {
-        spyOn(component, 'searchCourse');
-        const searchButton = fixture.debugElement.query(By.css('.vc-search__button'));
-        searchButton.nativeElement.click();
-        expect(component.searchCourse).toHaveBeenCalled();
-    });
-
-    it('should emit filterCourses event with searchValue on searchCourse method call', () => {
-        let testId = '';
-        component.searchValue = 'search';
-        component.filterCourses.subscribe((value) => testId = value);
-        component.searchCourse();
-        expect(testId).toBe('search');
-    });
+    it('should emit filterCourses event with searchValue on searchCourse method call', fakeAsync(() => {
+        component.filterCourses.subscribe((value) => {
+            expect(value).toBe('eee');
+        });
+        component.onKeyUp('e');
+        component.onKeyUp('ee');
+        component.onKeyUp('eee');
+        tick(500);
+    }));
 });

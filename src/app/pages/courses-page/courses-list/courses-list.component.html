@@ -1,16 +1,19 @@
 <vc-search (filterCourses)="filterCourses($event)"></vc-search>
 <vc-add-course></vc-add-course>
-<vc-course
-    (deleteCourse)="deleteCourse($event)"
-    *ngFor="let course of coursesList | async"
-    [course]="course">
-</vc-course>
-<p
-    *ngIf="!(coursesList | async)?.length"
-    class="vc-courses-list__message">
-    It was the last page. You can create a new course or go to the previous page
-</p>
-<div class="vc-courses-list__wrapper">
-    <button class="vc-courses-list__button" (click)="prev()" [disabled]="!_start">Previous</button>
-    <button class="vc-courses-list__button" (click)="next()" [disabled]="!(coursesList | async)?.length">Next</button>
+<div [class.vc-hidden]="isLoading">
+    <vc-course
+        (deleteCourse)="deleteCourse($event)"
+        *ngFor="let course of coursesList | orderBy"
+        [course]="course">
+    </vc-course>
+    <p
+        *ngIf="!coursesList.length"
+        class="vc-courses-list__message">
+        It was the last page. You can create a new course or go to the previous page
+    </p>
+    <div class="vc-courses-list__wrapper">
+        <button class="vc-courses-list__button" (click)="prev()" [disabled]="!_start">Previous</button>
+        <button class="vc-courses-list__button" (click)="next()" [disabled]="!coursesList.length">Next</button>
+    </div>
 </div>
+<vc-loading [class.vc-hidden]="!isLoading"></vc-loading>

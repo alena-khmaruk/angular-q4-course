@@ -15,7 +15,8 @@ import {FilterByNamePipe} from './pipes/filter-by-name.pipe';
     exports: [
         TimePipe,
         CoursePlateBorderDirective,
-        OrderByPipe
+        OrderByPipe,
+        FilterByNamePipe
     ],
     imports: [
         CommonModule
