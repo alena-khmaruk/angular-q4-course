@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {Course} from '../../course/course.model';
+import {Author} from 'src/app/pages/course-item-page/author-input/author-input.component';
 
 
 export interface IFilterParams {
@@ -24,6 +25,10 @@ export class CoursesService {
 
     public getCourses(params?: Partial<IFilterParams>): Observable<Course[]> {
         return this.http.get<Course[]>('/courses', {params});
+    }
+
+    public getAuthors(): Observable<Author[]> {
+        return this.http.get<Author[]>('/authors');
     }
 
     public createCourse(item: Course): Observable<Course> {

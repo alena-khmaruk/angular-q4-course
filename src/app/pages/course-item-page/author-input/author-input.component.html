@@ -1,0 +1,23 @@
+<div class="vc-authors" [class.vc-authors--error]="isTouched && !this.authors.length">
+    <div class="vc-authors__input">
+        <div class="vc-authors__author" *ngFor="let author of authors">
+            {{author.name}}
+            <div class="vc-authors__close" (click)="removeAuthor(author)">+</div>
+        </div>
+        <input 
+            class="vc-authors__search" 
+            type="text" 
+            [(ngModel)]="searchLine" 
+            (keyup)="filterAuthors()"
+            (blur)="onTouch()"
+            placeholder="Type to add Author">
+    </div>
+    <div *ngIf="suggestedAuthors.length" class="vc-authors__suggestion">
+        <div 
+            *ngFor="let author of suggestedAuthors" 
+            (click)="addAuthor(author)"
+            class="vc-authors__suggestion-item">
+            {{author.name}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+@import 'variables';
+
+.vc-authors {
+    position: relative;
+
+    &__input {
+        min-height: 36px;
+        border: 1px solid $vc-light-grey;
+        border-radius: 3px;
+        padding: 2px;
+
+        .vc-authors--error & {
+            border-color: $vc-red;
+        }
+    }
+
+    &__author {
+        display: inline-block;
+        background: $vc-light-grey;
+        border-radius: 3px;
+        margin-right: 2px;
+        padding: 2px 20px 2px 4px;
+        position: relative;
+    }
+
+    &__close {
+        position: absolute;
+        right: 4px;
+        top: 6px;
+        line-height: 1;
+        font-size: 16px;
+        font-weight: 700;
+        transform: rotate(45deg);
+        cursor: pointer;
+    }
+
+    &__search {
+        display: inline-block;
+        width: 150px;
+        border: 0;
+        height: 34px;
+    }
+
+    &__suggestion {
+        position: absolute;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+        background: $vc-white;
+    }
+
+    &__suggestion-item {
+        border: 1px solid $vc-light-grey;
+        cursor: pointer;
+    }
+}

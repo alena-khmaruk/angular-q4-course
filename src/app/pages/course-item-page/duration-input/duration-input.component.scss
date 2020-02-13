@@ -1,8 +1,22 @@
+@import 'variables';
+
 .vc-duration {
     &__input {
         width: 170px;
         max-width: 100%;
         margin-right: 10px;
+        margin-bottom: 0;
         display: inline-block;
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .vc-duration--error & {
+            border-color: $vc-red;
+        }
     }
 }

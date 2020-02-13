@@ -1,17 +1,13 @@
-<div class="vc-duration">
-    <label
-        for="courseDuration"
-        class="vc-label">Duration:</label>
-    <div>
-        <input
-            id="courseDuration"
-            [(ngModel)]="duration"
-            class="vc-input vc-duration__input"
-            type="number"
-            placeholder="minutes"
-            (blur)="onBlur()">
-        <span
-            *ngIf="duration"
-            class="vc-duration__text">{{duration | time}}</span>
-    </div>
+<div class="vc-duration" [class.vc-duration--error]="isTouched && !duration">
+    <input
+        id="courseDuration"
+        [(ngModel)]="duration"
+        class="vc-input vc-duration__input"
+        type="number"
+        placeholder="minutes"
+        (change)="onChange(duration)"
+        (blur)="onTouch()">
+    <span
+        *ngIf="duration"
+        class="vc-duration__text">{{duration | time}}</span>
 </div>

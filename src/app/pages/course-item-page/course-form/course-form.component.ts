@@ -1,12 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit} from '@angular/core';
+import * as moment from 'moment';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {Course} from '../../courses-page/course/course.model';
 import {CoursesService} from '../../courses-page/courses-list/services/courses.service';
-import { Store, select, createFeatureSelector } from '@ngrx/store';
-import { CourseItemState } from 'src/app/reducers/courseItem.reducer';
-import { updateName, updateDescription, updateCourse } from 'src/app/actions/courseItem.actions';
 
 @Component({
     selector: 'vc-course-form',
@@ -14,65 +13,97 @@ import { updateName, updateDescription, updateCourse } from 'src/app/actions/cou
     styleUrls: ['./course-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseFormComponent implements OnInit, OnChanges {
-    @Input() public course: Course;
-
-    public isEditPage: boolean;
+export class CourseFormComponent implements OnInit {
+    @Input() public courseId: number;
+    public courseForm: FormGroup;
     public headline: string;
-    private _selectCourseItem = createFeatureSelector<CourseItemState>('courseItem');
-    private _courseToSubmit: Course = new Course();
 
     constructor(
         private courses: CoursesService,
         private router: Router,
-        private store: Store<CourseItemState>
+        private fb: FormBuilder,
+        private ref: ChangeDetectorRef
     ) {
-        store.pipe(select(this._selectCourseItem)).subscribe((state: CourseItemState) => {
-            this._courseToSubmit.name = state.name;
-            this._courseToSubmit.length = state.length;
-            this._courseToSubmit.date = state.date;
-            this._courseToSubmit.description = state.description;
-            this._courseToSubmit.id = state.id;
-            this._courseToSubmit.isTopRated = state.isTopRated;
+        this.courseForm = fb.group({
+            title: ['', [Validators.required, Validators.maxLength(50)]],
+            description: ['', [Validators.required, Validators.maxLength(500)]],
+            duration: [null, [Validators.required]],
+            date: [null, [Validators.required]],
+            author: [null, [Validators.required]],
+            topRated: [false]
         });
     }
 
+    get title() {
+        return this.courseForm.get('title');
+    }
+
+    get description() {
+        return this.courseForm.get('description');
+    }
+
+    get date() {
+        return this.courseForm.get('date');
+    }
+
+    get duration() {
+        return this.courseForm.get('duration');
+    }
+
+    get author() {
+        return this.courseForm.get('author');
+    }
+
+    get topRated() {
+        return this.courseForm.get('topRated');
+    }
+
     public ngOnInit(): void {
-        this.isEditPage = Boolean(this.course);
-        this._updateHeadline(this.isEditPage);
-        this.course = this.course || new Course();
-        this.store.dispatch(updateCourse({course: this.course}));
+        if (this.courseId) {
+            this.courses.getCourseById(this.courseId).subscribe((course: Course) => {
+                this._fillForm(course);
+                this._updateHeadline(true, course.name);
+            });
+        } else {
+            this._updateHeadline(false);
+        }
     }
 
-    public ngOnChanges(): void {
-        this.store.dispatch(updateCourse({course: this.course}));
-        this.isEditPage = Boolean(this.course);
-        this._updateHeadline(this.isEditPage);
-    }
-
-    public saveCourse() {
-        this._submitForm().subscribe(() => {
+    public onFormSubmit(): void {
+        const course = new Course();
+        course.name = this.title.value;
+        course.description = this.description.value;
+        course.date = moment(this.date.value, 'DD/MM/YYYY', true).format();
+        course.length = this.duration.value;
+        course.isTopRated = this.topRated.value;
+        course.authors = this.author.value;
+        this._submitForm(course).subscribe(() => {
             this.router.navigate(['courses']);
         });
     }
 
-    public updateName() {
-        this.store.dispatch(updateName({name: this.course.name}));
-    }
-
-    public updateDescription() {
-        this.store.dispatch(updateDescription({description: this.course.description}));
-    }
-
-    private _submitForm(): Observable<Course> {
-        if (this.isEditPage) {
-            return this.courses.updateCourse(this._courseToSubmit);
+    private _submitForm(course: Course): Observable<Course> {
+        if (this.courseId) {
+            course.id = this.courseId;
+            return this.courses.updateCourse(course);
         } else {
-            return this.courses.createCourse(this._courseToSubmit);
+            return this.courses.createCourse(course);
         }
     }
 
-    private _updateHeadline(isEditPage: boolean) {
-        this.headline = isEditPage ? `Edit ${this.course.name} course` : 'New course';
+    private _updateHeadline(isEditPage: boolean, name?: string) {
+        this.headline = isEditPage ? `Edit ${name} course` : 'New course';
+    }
+
+    private _fillForm(course: Course): void {
+        const date = new Date(course.date);
+        const authors = course.authors.map(item => ({id: item.id, name: `${item.name} ${item.lastName || ''}`}));
+        this.title.setValue(course.name);
+        this.description.setValue(course.description);
+        this.date.setValue(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
+        this.duration.setValue(course.length);
+        this.author.setValue(authors);
+        this.topRated.setValue(course.isTopRated);
+        this.ref.markForCheck();
     }
 }

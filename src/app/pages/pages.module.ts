@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 import {CoreModule} from '../core/core.module';
@@ -16,6 +16,7 @@ import {CourseItemPageComponent} from './course-item-page/course-item-page.compo
 import { CourseFormComponent } from './course-item-page/course-form/course-form.component';
 import { DurationInputComponent } from './course-item-page/duration-input/duration-input.component';
 import { DateInputComponent } from './course-item-page/date-input/date-input.component';
+import { AuthorInputComponent } from './course-item-page/author-input/author-input.component';
 
 @NgModule({
     declarations: [
@@ -29,13 +30,15 @@ import { DateInputComponent } from './course-item-page/date-input/date-input.com
         CourseItemPageComponent,
         CourseFormComponent,
         DurationInputComponent,
-        DateInputComponent
+        DateInputComponent,
+        AuthorInputComponent
     ],
     exports: [CoursesPageComponent],
     imports: [
         CommonModule,
         CoreModule,
         FormsModule,
+        ReactiveFormsModule,
         SharedModule,
         RouterModule
     ]

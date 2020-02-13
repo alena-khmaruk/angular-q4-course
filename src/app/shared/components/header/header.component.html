@@ -7,7 +7,7 @@
         <img class="vc-header__icon" src="assets/images/ic-exit.svg" alt="exit icon">
         <button type="button" class="vc-header__button" (click)="logOut()">Log off</button>
     </div>
-    <div *ngIf="(user$ | async) === (null | undefined) && !isLoginPage()" >
+    <div *ngIf="(user$ | async) === (null || undefined) && !isLoginPage()" >
         <img class="vc-header__icon" src="assets/images/ic-exit.svg" alt="login icon">
         <button class="vc-header__button" (click)="openLoginPage()">Log in</button>
     </div>

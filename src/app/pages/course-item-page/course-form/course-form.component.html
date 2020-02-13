@@ -1,32 +1,88 @@
 <div class="vc-form">
-    <h3 class="vc-form__name">{{headline}}</h3>
-    <form id="course" class="vc-form__block" name="courseForm">
-        <label for="courseTitle" class="vc-label">Title:</label>
-        <input
-            id="courseTitle"
-            class="vc-input"
-            type="text"
-            placeholder="Text input"
-            required
-            [(ngModel)]="course.name"
-            name="courseTitle"
-            (blur)="updateName()">
+    <h3 class="vc-form__headline">{{headline}}</h3>
+    <form [formGroup]="courseForm" (ngSubmit)="onFormSubmit()" id="course" class="vc-form__form">
+        <div class="vc-form__block" [class.vc-form__block--error]="title.touched && title.invalid">
+            <label for="title" class="vc-label">Title:</label>
+            <input
+                id="Title"
+                class="vc-form__input"
+                type="text"
+                placeholder="Course Title"
+                formControlName="title">
+            <p 
+                class="vc-form__error" 
+                *ngIf="title.touched && title.errors?.required">
+                The field is required
+            </p>
+            <p 
+                class="vc-form__error" 
+                *ngIf="title.touched && title.errors?.maxlength">
+                Title should contain less then 50 symbols
+            </p>         
+        </div>
 
-        <label for="courseDescription" class="vc-label">Description:</label>
-        <textarea
-            class="vc-form__textarea"
-            id="courseDescription"
-            placeholder="Add description"
-            name="courseDescription"
-            [(ngModel)]="course.description"></textarea>
+        <div class="vc-form__block" [class.vc-form__block--error]="description.touched && description.invalid">
+            <label for="description" class="vc-label">Description:</label>
+            <textarea
+                class="vc-form__textarea"
+                id="description"
+                placeholder="Course Description"
+                formControlName="description"></textarea>
+            <p 
+                class="vc-form__error" 
+                *ngIf="description.touched && description.errors?.required">
+                The field is required
+            </p>
+            <p 
+                class="vc-form__error" 
+                *ngIf="description.touched && description.errors?.maxlength">
+                Description should contain less then 500 symbols
+            </p>         
+        </div>
 
-        <vc-duration-input [duration]="course.length"></vc-duration-input>
+        <div class="vc-form__block" [class.vc-form__block--error]="duration.touched && duration.invalid">
+            <label for="duration" class="vc-label">Duration:</label>
+            <vc-duration-input id="duration" formControlName="duration"></vc-duration-input>
+            <p 
+                class="vc-form__error" 
+                *ngIf="duration.touched && duration.errors?.required">
+                The field is required
+            </p>     
+        </div>
+        
+        <div class="vc-form__block" [class.vc-form__block--error]="date.touched && date.invalid">
+            <label for="date" class="vc-label">Date creation:</label>
+            <vc-date-input id="date" formControlName="date"></vc-date-input>
+            <p 
+                class="vc-form__error" 
+                *ngIf="date.touched && date.errors?.required">
+                The field is required
+            </p>
+            <p 
+                class="vc-form__error" 
+                *ngIf="date.touched && !date.errors?.required && date.errors?.dateValidity">
+                Date is invalid. Correct the date in dd/mm/yyyy format.
+            </p>         
+        </div>
 
-        <vc-date-input [dateCreation]="course.date"></vc-date-input>
+        <div class="vc-form__block" [class.vc-form__block--error]="author.touched && author.invalid">
+            <label for="author" class="vc-label">Authors:</label>
+            <vc-author-input id="author" formControlName="author"></vc-author-input>
+            <p 
+                class="vc-form__error" 
+                *ngIf="author.touched && author.errors?.required">
+                The field is required
+            </p>       
+        </div>
+
+        <div class="vc-form__block">
+            <label for="topRated" class="vc-label">Top Rated:</label>
+            <input class="vc-form__checkbox" id="topRated" type="checkbox" formControlName="topRated">     
+        </div>
 
         <div class="vc-form__buttons">
-            <button [routerLink]="['/courses']" class="vc-form__button vc-form__cancel">Cancel</button>
-            <button class="vc-form__button vc-form__save" (click)="saveCourse()">Save</button>
+            <button type="button" [routerLink]="['/courses']" class="vc-form__button vc-form__cancel">Cancel</button>
+            <button type="submit" class="vc-form__button vc-form__save" [disabled]="courseForm.invalid">Save</button>
         </div>
     </form>
 </div>

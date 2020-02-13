@@ -1,9 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
-
-import {CoursesService} from '../courses-page/courses-list/services/courses.service';
-import {Course} from '../courses-page/course/course.model';
 
 @Component({
     selector: 'vc-course-item-page',
@@ -11,20 +7,16 @@ import {Course} from '../courses-page/course/course.model';
     styleUrls: ['./course-item-page.component.scss']
 })
 export class CourseItemPageComponent implements OnInit {
-    public currentCourse: Course;
+    public courseId: number;
 
     constructor(
-        private router: ActivatedRoute,
-        private courses: CoursesService
+        private router: ActivatedRoute
     ) {}
 
     public ngOnInit(): void {
         this.router.params
-            .pipe(
-                switchMap((params: {id: number}) => params.id && this.courses.getCourseById(params.id))
-            )
-            .subscribe((course: Course) => {
-                this.currentCourse = course;
+            .subscribe((params: {id: number}) => {
+                this.courseId = params.id || null;
             });
     }
 

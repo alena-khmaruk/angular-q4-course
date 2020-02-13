@@ -1,6 +1,41 @@
+@import 'variables';
+
 .vc-date {
+    width: 200px;
+    max-width: 100%;
+    height: 36px;
+    border-radius: 3px;
+    border: 1px solid $vc-light-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--error {
+        border-color: $vc-red;
+    } 
+
     &__input {
-        width: 170px;
-        max-width: 100%;
+        height: 34px;
+        display: inline-block;
+        font-family: $vc-ff-source-sans;
+        font-size: 14px;
+        line-height: 1.71;
+        color: $vc-stale-grey;
+        border: 0;
+        border-radius: 3px;
+        width: 50px;
+        text-align: center;
+        padding: 6px 0;
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &--year {
+            width: 88px;
+        }
     }
 }

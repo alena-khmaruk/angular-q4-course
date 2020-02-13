@@ -1,11 +1,25 @@
-<div class="vc-date">
-    <label for="courseDate" class="vc-label">Date:</label>
+<div class="vc-date" id="courseDate" [class.vc-date--error]="isTouched && !isValid">
     <input
-        id="courseDate"
-        class="vc-input vc-date__input"
-        type="date"
-        placeholder="date"
-        [ngModel]="dateCreation | date:'yyyy-MM-dd'"
-        (ngModelChange)="dateCreation = $event"
-        (blur)="onBlur()">
+        class="vc-date__input vc-date__input--day"
+        type="number"
+        placeholder="dd"
+        [(ngModel)]="day.value"
+        (blur)="onTouch('day')"
+        (change)="onChange()">
+    <span>/</span>
+    <input
+        class="vc-date__input vc-date__input--month"
+        type="number"
+        placeholder="mm"
+        [(ngModel)]="month.value"
+        (blur)="onTouch('month')"
+        (change)="onChange()">
+    <span>/</span>
+    <input
+        class="vc-date__input vc-date__input--year"
+        type="text"
+        placeholder="yyyy"
+        [(ngModel)]="year.value"
+        (blur)="onTouch('year')"
+        (change)="onChange()">
 </div>

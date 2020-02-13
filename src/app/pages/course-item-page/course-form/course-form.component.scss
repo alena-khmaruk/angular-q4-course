@@ -10,17 +10,40 @@
     padding: 24px;
     color: $vc-dark-grey;
 
-    &__block {
-        display: block;
-    }
-
     &__name {
         margin-bottom: 22px;
         font-size: 24px;
         font-weight: 600;
     }
 
+    &__form {
+        display: block;
+    }
+
+    &__block {
+        position: relative;
+        padding-bottom: 20px;
+    }
+
+    &__input {
+        display: block;
+        height: 36px;
+        border-radius: 3px;
+        border: 1px solid $vc-light-grey;
+        font-family: $vc-ff-source-sans;
+        font-size: 14px;
+        line-height: 1.71;
+        color: $vc-stale-grey;
+        padding: 6px 12px;
+
+        .vc-form__block--error & {
+            border: 1px solid $vc-red;
+            color: $vc-red;
+        }
+    }
+
     &__textarea {
+        display: block;
         resize: none;
         width: 100%;
         height: 108px;
@@ -31,7 +54,20 @@
         line-height: 1.71;
         color: $vc-stale-grey;
         padding: 6px 12px;
-        margin-bottom: 12px;
+
+        .vc-form__block--error & {
+            border: 1px solid $vc-red;
+            color: $vc-red;
+        }
+    }
+
+    &__error {
+        margin: 0;
+        font-size: 12px;
+        color: $vc-red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 
     &__buttons {
@@ -65,5 +101,19 @@
         width: 64px;
         color: $vc-white;
         background: $vc-green;
+
+        &:disabled {
+            background: $vc-dark-grey;
+            color: $vc-white;
+            cursor: default;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__checkbox {
+        display: block;
     }
 }

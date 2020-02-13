@@ -1,23 +1,49 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Store} from '@ngrx/store';
-
-import {CourseItemState} from 'src/app/reducers/courseItem.reducer';
-import {updateLength} from 'src/app/actions/courseItem.actions';
+import {Component, forwardRef} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 @Component({
     selector: 'vc-duration-input',
     templateUrl: './duration-input.component.html',
     styleUrls: ['./duration-input.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    providers: [
+        {
+          provide: NG_VALUE_ACCESSOR,
+          useExisting: forwardRef(() => DurationInputComponent),
+          multi: true
+        }
+      ]
 })
-export class DurationInputComponent implements OnInit {
-    @Input() public duration: number;
+export class DurationInputComponent implements ControlValueAccessor {
+    public duration: number;
+    public isTouched = false;
 
-    constructor(private store: Store<CourseItemState>) {}
+    private _onChange: (a: any) => void;
+    private _onTouched: () => void;
 
-    public ngOnInit(): void {}
+    constructor() {}
 
-    public onBlur(): void {
-        this.store.dispatch(updateLength({length: this.duration}));
+    public writeValue(duration: number): void {
+        this.duration = duration;
+    }
+
+    public registerOnChange(fn: (a: any) => void): void {
+        this._onChange = fn;
+    }
+
+    public registerOnTouched(fn: () => void): void {
+        this._onTouched = fn;
+    }
+
+    public onChange(): void {
+        this._onChange(this.duration);
+    }
+
+    public onTouch(): void {
+        if (this.isTouched) {
+            return;
+        }
+
+        this._onTouched();
+        this.isTouched = true;
     }
 }
