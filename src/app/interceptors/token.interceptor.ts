@@ -1,23 +1,29 @@
 import {Injectable} from '@angular/core';
 import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Store, select} from '@ngrx/store';
 
-import {AuthenticationService} from '../shared/components/header/services/authentication.service';
+import {AppState} from '../app.module';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthenticationService) {}
+    private _token: string;
+
+    constructor(private store: Store<AppState>) {
+        store.pipe(select(state => state.auth.token)).subscribe((token: string) => {
+            this._token = token;
+        });
+    }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         if (request.url.includes('login')) {
             return next.handle(request);
         }
 
-        const token = this.authService.token;
         const nRequest = request.clone({
-            setHeaders: {Authorization: token}
+            setHeaders: {Authorization: this._token}
         });
 
         return next.handle(nRequest);

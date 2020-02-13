@@ -9,7 +9,8 @@
             placeholder="Text input"
             required
             [(ngModel)]="course.name"
-            name="courseTitle">
+            name="courseTitle"
+            (blur)="updateName()">
 
         <label for="courseDescription" class="vc-label">Description:</label>
         <textarea
@@ -19,9 +20,9 @@
             name="courseDescription"
             [(ngModel)]="course.description"></textarea>
 
-        <vc-duration-input (updateDuration)="updateDuration($event)" [duration]="course.length"></vc-duration-input>
+        <vc-duration-input [duration]="course.length"></vc-duration-input>
 
-        <vc-date-input (updateDate)="updateDate($event)" [dateCreation]="course.date"></vc-date-input>
+        <vc-date-input [dateCreation]="course.date"></vc-date-input>
 
         <div class="vc-form__buttons">
             <button [routerLink]="['/courses']" class="vc-form__button vc-form__cancel">Cancel</button>

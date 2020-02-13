@@ -1,4 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+
+import {CourseItemState} from 'src/app/reducers/courseItem.reducer';
+import {updateDate} from 'src/app/actions/courseItem.actions';
 
 @Component({
     selector: 'vc-date-input',
@@ -8,13 +12,13 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 })
 export class DateInputComponent implements OnInit {
     @Input() public dateCreation: Date;
-    @Output() public updateDate: EventEmitter<Date> = new EventEmitter<Date>();
 
-    constructor() {}
+    constructor(private store: Store<CourseItemState>) {}
 
     public ngOnInit(): void {}
 
     public onBlur(): void {
-        this.updateDate.emit(new Date(this.dateCreation));
+        const date: Date = new Date(this.dateCreation);
+        this.store.dispatch(updateDate({date}));
     }
 }

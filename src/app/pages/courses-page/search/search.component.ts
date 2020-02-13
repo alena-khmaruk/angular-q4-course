@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private _searchSubscription(): Subscription {
         return this.searchValue.pipe(
-            filter((value) => value.length > 2),
+            filter((value) => value.length > 2 || !value.length),
             debounceTime(400),
             distinctUntilChanged()
         ).subscribe((value: string) => {

@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 import {AppComponent} from './app.component';
 import {CoursesPageComponent} from './pages/courses-page/courses-page.component';
@@ -14,6 +16,14 @@ import {CourseItemPageComponent} from './pages/course-item-page/course-item-page
 import {AuthGuard} from './guards/auth.guard';
 import {TokenInterceptor} from './interceptors/token.interceptor';
 import {DomainInterceptor} from './interceptors/domain.interceptor';
+import {coursesReducer, CoursesState} from './reducers/courses.reducer';
+import {authReducer, AuthState} from './reducers/auth.reducer';
+import { courseItemReducer } from './reducers/courseItem.reducer';
+
+export interface AppState {
+    courses: CoursesState;
+    auth: AuthState;
+}
 
 const appRoutes: Routes = [
     {
@@ -60,7 +70,15 @@ const appRoutes: Routes = [
         SharedModule,
         PagesModule,
         RouterModule,
-        HttpClientModule
+        HttpClientModule,
+        StoreModule.forRoot({
+            courses: coursesReducer,
+            auth: authReducer,
+            courseItem: courseItemReducer
+        }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 10
+        })
     ],
     providers: [
         {
@@ -76,5 +94,6 @@ const appRoutes: Routes = [
     ],
     bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

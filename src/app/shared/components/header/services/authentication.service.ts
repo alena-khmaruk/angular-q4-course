@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, BehaviorSubject} from 'rxjs';
 import {switchMap, tap} from 'rxjs/operators';
+import {Store, select} from '@ngrx/store';
 
 import {User} from '../../user/user.model';
+import {AuthState} from 'src/app/reducers/auth.reducer';
+import {updateUser, login, logout} from 'src/app/actions/auth.actions';
 
 interface IToken {
     token: string;
@@ -21,34 +23,20 @@ interface IUser {
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private _user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
-    private _token: string;
-
-    constructor(private http: HttpClient) {
-        this._token = localStorage.getItem('token');
+    constructor(private http: HttpClient, private store: Store<AuthState>) {
+        const token = localStorage.getItem('token');
         this._saveUser = this._saveUser.bind(this);
-        if (this._token) {
-            setTimeout(() => this.requestUserInfo(this._token).subscribe(this._saveUser));
+        if (token) {
+            store.dispatch(login({token}));
+            setTimeout(() => this.requestUserInfo(token).subscribe(this._saveUser));
         }
     }
 
-    get user() {
-        return this._user.asObservable();
-    }
-
-    get token() {
-        return this._token;
-    }
-
-    get isAuthenticated(): boolean {
-        return Boolean(this._token);
-    }
-
-    public logIn(login: string, password: string): void {
-        this.http.post<IToken>('/auth/login', {login, password})
+    public logIn(email: string, password: string): void {
+        this.http.post<IToken>('/auth/login', {login: email, password})
             .pipe(
                 tap((res: IToken) => {
-                    this._token = res.token;
+                    this.store.dispatch(login({token: res.token}));
                     localStorage.setItem('token', res.token);
                 }),
                 switchMap((res: IToken) => this.requestUserInfo(res.token))
@@ -58,20 +46,16 @@ export class AuthenticationService {
     }
 
     public logOut(): void {
-        this._user.next(null);
+        this.store.dispatch(logout());
         localStorage.removeItem('token');
-    }
-
-    public getUser(): Observable<User> {
-        return this.user;
     }
 
     public requestUserInfo(token: string) {
         return this.http.post<IUser>('/auth/userinfo', {token});
     }
 
-    private _saveUser(user: IUser) {
-        const userInstance: User = new User(user.name.first, user.name.last);
-        this._user.next(userInstance);
+    private _saveUser(userInfo: IUser) {
+        const user: User = new User(userInfo.name.first, userInfo.name.last);
+        this.store.dispatch(updateUser({user}));
     }
 }

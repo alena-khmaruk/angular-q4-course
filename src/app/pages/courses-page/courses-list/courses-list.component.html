@@ -3,17 +3,17 @@
 <div [class.vc-hidden]="isLoading">
     <vc-course
         (deleteCourse)="deleteCourse($event)"
-        *ngFor="let course of coursesList | orderBy"
+        *ngFor="let course of courses$ | async | orderBy"
         [course]="course">
     </vc-course>
     <p
-        *ngIf="!coursesList.length"
+        *ngIf="!(courses$ | async).length"
         class="vc-courses-list__message">
         It was the last page. You can create a new course or go to the previous page
     </p>
     <div class="vc-courses-list__wrapper">
-        <button class="vc-courses-list__button" (click)="prev()" [disabled]="!_start">Previous</button>
-        <button class="vc-courses-list__button" (click)="next()" [disabled]="!coursesList.length">Next</button>
+        <button class="vc-courses-list__button" (click)="prev()" [disabled]="!_offset">Previous</button>
+        <button class="vc-courses-list__button" (click)="next()" [disabled]="!(courses$ | async).length">Next</button>
     </div>
 </div>
 <vc-loading [class.vc-hidden]="!isLoading"></vc-loading>

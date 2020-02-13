@@ -1,4 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+
+import {CourseItemState} from 'src/app/reducers/courseItem.reducer';
+import {updateLength} from 'src/app/actions/courseItem.actions';
 
 @Component({
     selector: 'vc-duration-input',
@@ -8,13 +12,12 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 })
 export class DurationInputComponent implements OnInit {
     @Input() public duration: number;
-    @Output() public updateDuration: EventEmitter<number> = new EventEmitter<number>();
 
-    constructor() {}
+    constructor(private store: Store<CourseItemState>) {}
 
     public ngOnInit(): void {}
 
     public onBlur(): void {
-        this.updateDuration.emit(this.duration);
+        this.store.dispatch(updateLength({length: this.duration}));
     }
 }
